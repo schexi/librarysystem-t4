@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\avr\\Desktop\\LibrarySystem-T4\\LibrarySystem-T4\\LibrarySystem-T4.csproj",
+      "projectUniqueName": "C:\\Users\\avr\\Desktop\\LibrarySystem-T4\\LibrarySystem-T4.csproj",
       "projectName": "LibrarySystem-T4",
-      "projectPath": "C:\\Users\\avr\\Desktop\\LibrarySystem-T4\\LibrarySystem-T4\\LibrarySystem-T4.csproj",
+      "projectPath": "C:\\Users\\avr\\Desktop\\LibrarySystem-T4\\LibrarySystem-T4.csproj",
       "packagesPath": "C:\\Users\\avr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\avr\\Desktop\\LibrarySystem-T4\\LibrarySystem-T4\\obj\\",
+      "outputPath": "C:\\Users\\avr\\Desktop\\LibrarySystem-T4\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\avr\\AppData\\Roaming\\NuGet\\NuGet.Config"
