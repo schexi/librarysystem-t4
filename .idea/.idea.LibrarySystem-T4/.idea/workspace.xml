@@ -11,7 +11,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b53dcd37-3e63-40d2-bbec-877ba32844c4" name="Changes" comment="" />
+    <list default="true" id="b53dcd37-3e63-40d2-bbec-877ba32844c4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Loans-API/KeyFilters/ApiKeyFilter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.LibrarySystem-T4/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LibrarySystem-T4/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LibrarySystem-T4/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LibrarySystem-T4/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/global.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +45,12 @@
     &quot;accountId&quot;: &quot;c26e0fd0-a250-414a-996f-a05270f0836f&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Loans-API/KeyFilters/ApiKeyFilter.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -48,18 +59,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "loans-api",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.LibrarySystem-T4: http">
     <configuration name="LibrarySystem-T4: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/LibrarySystem-T4.csproj" />
@@ -96,7 +112,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="692ae493-3def-4d36-83c9-ce85c6ad555e" name="Changes" comment="" />
+      <changelist id="b53dcd37-3e63-40d2-bbec-877ba32844c4" name="Changes" comment="" />
       <created>1771935238385</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -105,6 +121,7 @@
       <workItem from="1772024509940" duration="99000" />
       <workItem from="1772025028026" duration="30000" />
       <workItem from="1772025089356" duration="14000" />
+      <workItem from="1772134236208" duration="1917000" />
     </task>
     <servers />
   </component>
