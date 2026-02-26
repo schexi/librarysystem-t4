@@ -24,7 +24,7 @@ public class ApiKeyFilter : IActionFilter
         }
 
         // Kontrollera att det är rätt nyckel
-        if (key != _config["apikey123"])
+        if (key != _config["ApiKey"])
         {
             // Om det är fel nyckel
             context.Result = new UnauthorizedResult();
@@ -33,6 +33,6 @@ public class ApiKeyFilter : IActionFilter
 
     public void OnActionExecuted(ActionExecutedContext context)
     {
-        // Behöver inte göra något här
+
     }
 }
