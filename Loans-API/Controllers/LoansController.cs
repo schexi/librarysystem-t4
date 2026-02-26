@@ -1,3 +1,4 @@
+using Loans_API.KeyFilters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LoansApi.Data;
@@ -7,6 +8,7 @@ namespace LoansApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[ServiceFilter(typeof(ApiKeyFilter))]
 public class LoansController : ControllerBase
 {
     private readonly LoansContext _context;
