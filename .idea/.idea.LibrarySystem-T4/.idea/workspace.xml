@@ -14,8 +14,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b53dcd37-3e63-40d2-bbec-877ba32844c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LibrarySystem-T4/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LibrarySystem-T4/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Loans-API/Data/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Loans-API/Data/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Loans-API/KeyFilters/ApiKeyFilter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Loans-API/KeyFilters/ApiKeyFilter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Loans-API/Controllers/LoansController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Loans-API/Controllers/LoansController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Loans-API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Loans-API/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
