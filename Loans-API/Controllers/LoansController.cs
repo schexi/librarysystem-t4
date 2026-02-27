@@ -10,7 +10,7 @@ namespace LoansApi.Controllers;
 [Route("api/[controller]")]
 [ServiceFilter(typeof(ApiKeyFilter))]
 public class LoansController : ControllerBase
-{
+{ 
     private readonly LoansContext _context;
 
     public LoansController(LoansContext context)
@@ -18,7 +18,10 @@ public class LoansController : ControllerBase
         _context = context;
     }
 
-    // GET: api/loans
+    
+    // REST HTTP - metoder
+    
+    // GET- metod för att hämta alla lån
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -26,7 +29,7 @@ public class LoansController : ControllerBase
         return Ok(loans);
     }
 
-    // GET: api/loans/5
+    // GET- metod för att hämta specifika lån via ID
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -35,7 +38,7 @@ public class LoansController : ControllerBase
         return Ok(loan);
     }
 
-    // GET: api/loans/overdue
+    // GET-metod för att hämta alla försenade lån
     [HttpGet("overdue")]
     public async Task<IActionResult> GetOverdue()
     {
@@ -45,17 +48,17 @@ public class LoansController : ControllerBase
         return Ok(overdue);
     }
 
-    // POST: api/loans
+    // POST- metod för att skapa ett nytt lån
     [HttpPost]
     public async Task<IActionResult> Create(Loan loan)
     {
         loan.BorrowedDate = DateTime.Now;
         _context.Loans.Add(loan);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(); // Skriver in det nya lånet i loans.db databasen
         return CreatedAtAction(nameof(GetById), new { id = loan.Id }, loan);
     }
 
-    // PUT: api/loans/5/return
+    // PUT- metod för att återlämna lån
     [HttpPut("{id}/return")]
     public async Task<IActionResult> Return(int id)
     {
@@ -66,7 +69,7 @@ public class LoansController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/loans/5
+    // Radera ett lån
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
