@@ -1,3 +1,4 @@
+using Loans_API.KeyFilters;
 using LoansApi.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<LoansContext>(options =>
     options.UseSqlite("Data Source=loans.db"));
+builder.Services.AddScoped<ApiKeyFilter>();
 
 var app = builder.Build();
 
