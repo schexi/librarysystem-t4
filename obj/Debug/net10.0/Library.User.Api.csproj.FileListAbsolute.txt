@@ -187,3 +187,4 @@
 /Users/adde/RiderProjects/Library.User.Api/Library.User.Api/bin/Debug/net10.0/runtimes/win-arm64/native/e_sqlite3.dll
 /Users/adde/RiderProjects/Library.User.Api/Library.User.Api/bin/Debug/net10.0/runtimes/win-x64/native/e_sqlite3.dll
 /Users/adde/RiderProjects/Library.User.Api/Library.User.Api/bin/Debug/net10.0/runtimes/win-x86/native/e_sqlite3.dll
+/Users/adde/RiderProjects/Library.User.Api/Library.User.Api/obj/Debug/net10.0/Library.User.Api.sourcelink.json
