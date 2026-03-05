@@ -1,0 +1,6 @@
+@CategoriesAapi_HostAddress = http://localhost:5035
+
+GET {{CategoriesAapi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
