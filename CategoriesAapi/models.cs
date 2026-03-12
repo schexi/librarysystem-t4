@@ -19,4 +19,3 @@ public class Item
 
 // DTOs (what comes in from requests)
 public record CreateCategoryRequest(string Name, string Description);
-public record CreateItemRequest(string Title, string Author, string Type);
