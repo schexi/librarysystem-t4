@@ -21,7 +21,7 @@ public class LoansController : Controller
     public async Task<IActionResult> Index()
     {
         var client = _httpClientFactory.CreateClient();
-        client.DefaultRequestHeaders.Add("X-Api-Key", _config["ApiKey"]);
+        client.DefaultRequestHeaders.Add("API-Key", _config["ApiKey"]);
 
         var loans = await client.GetFromJsonAsync<List<LoanViewModel>>(
             _config["ApiUrls:Loans"] + "/api/loans"
@@ -42,7 +42,7 @@ public class LoansController : Controller
     public async Task<IActionResult> Create(LoanViewModel model)
     {
         var client = _httpClientFactory.CreateClient();
-        client.DefaultRequestHeaders.Add("X-Api-Key", _config["ApiKey"]);
+        client.DefaultRequestHeaders.Add("API-Key", _config["ApiKey"]);
 
         var response = await client.PostAsJsonAsync(
             _config["ApiUrls:Loans"] + "/api/loans", model
@@ -59,7 +59,7 @@ public class LoansController : Controller
     public async Task<IActionResult> Return(int id)
     {
         var client = _httpClientFactory.CreateClient();
-        client.DefaultRequestHeaders.Add("X-Api-Key", _config["ApiKey"]);
+        client.DefaultRequestHeaders.Add("API-Key", _config["ApiKey"]);
 
         await client.PutAsync(
             _config["ApiUrls:Loans"] + $"/api/loans/{id}/return", null
