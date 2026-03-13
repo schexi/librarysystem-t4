@@ -37,7 +37,7 @@ public class LoansController : Controller
         return View(model);
     }
 
-   
+    // POST-metod för att skicka formulärdatan till loans-api när ett lån skapas
     [HttpPost]
     public async Task<IActionResult> Create(LoanViewModel model)
     {
@@ -54,7 +54,7 @@ public class LoansController : Controller
         return View(model);
     }
 
-
+    // POST-metod för att återlämna lån
     [HttpPost]
     public async Task<IActionResult> Return(int id)
     {
