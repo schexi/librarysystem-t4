@@ -1,18 +1,25 @@
-@model TModel
+@model List<LibrarySystem_T4.Models.LoanViewModel>
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Alla lån";
 }
 
-<!DOCTYPE html>
+<style>
+    body {
+        
+    }
 
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
-</div>
-</body>
-</html>
+   
+</style>
+
+<div class="loans-container">
+    <h1>Alla lån</h1>
+
+    
+    </div>
+
+               
+        }
+    }
+
+    <a asp-action="Create" class="btn-create">+ Skapa nytt lån</a>
