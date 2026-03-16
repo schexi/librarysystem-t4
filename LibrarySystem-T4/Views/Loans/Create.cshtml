@@ -5,12 +5,6 @@
 }
 
 <style>
-    body {
-        background: linear-gradient(135deg, #0f4c75 0%, #1b9aaa 50%, #06d6a0 100%);
-        min-height: 100vh;
-        font-family: 'Segoe UI', sans-serif;
-    }
-
     .form-container {
         max-width: 600px;
         margin: 40px auto;
@@ -56,15 +50,26 @@
         box-sizing: border-box;
     }
 
+    input[readonly] {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
     input::placeholder {
         opacity: 0.5;
         color: white;
     }
 
-    input:focus {
+    input:focus:not([readonly]) {
         outline: none;
         border-color: rgba(255,255,255,0.6);
         background: rgba(255,255,255,0.18);
+    }
+
+    .field-note {
+        font-size: 11px;
+        color: rgba(255,255,255,0.5);
+        margin-top: 4px;
     }
 
     .btn-submit {
@@ -107,31 +112,35 @@
     <div class="form-card">
         <form asp-action="Create" method="post">
 
+            @* ItemId låst — hämtas från Items API via URL *@
             <div class="form-group">
                 <label asp-for="ItemId">Objekt-ID</label>
-                <input asp-for="ItemId" placeholder="Ange objekt-ID" />
-                <span asp-validation-for="ItemId"></span>
+                <input asp-for="ItemId" readonly />
+                <span class="field-note">Hämtas automatiskt från valt objekt</span>
             </div>
 
+            @* Namn låst — hämtas från Users API *@
             <div class="form-group">
                 <label asp-for="BorrowerName">Namn</label>
-                <input asp-for="BorrowerName" placeholder="Ange låntagarens namn" />
-                <span asp-validation-for="BorrowerName"></span>
+                <input asp-for="BorrowerName" readonly />
+                <span class="field-note">Hämtas från inloggad användare</span>
             </div>
 
+            @* Email låst — hämtas från Users API *@
             <div class="form-group">
                 <label asp-for="BorrowerEmail">E-post</label>
-                <input asp-for="BorrowerEmail" placeholder="Ange låntagarens e-post" />
-                <span asp-validation-for="BorrowerEmail"></span>
+                <input asp-for="BorrowerEmail" readonly />
+                <span class="field-note">Hämtas från inloggad användare</span>
             </div>
 
+            @* Förfallodatum låst — sätts automatiskt 4 veckor framåt *@
             <div class="form-group">
                 <label asp-for="DueDate">Förfallodatum</label>
-                <input asp-for="DueDate" type="date" />
-                <span asp-validation-for="DueDate"></span>
+                <input asp-for="DueDate" type="date" readonly />
+                <span class="field-note">Sätts automatiskt till 4 veckor från idag</span>
             </div>
 
-            <button type="submit" class="btn-submit">Skapa lån</button>
+            <button type="submit" class="btn-submit">Bekräfta lån</button>
         </form>
 
         <a asp-action="Index" class="btn-cancel">← Tillbaka till lånelistan</a>
