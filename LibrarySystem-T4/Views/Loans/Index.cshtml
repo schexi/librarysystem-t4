@@ -160,6 +160,16 @@
         font-size: 0.95rem;
         text-decoration: none;
     }
+    .btn-details {
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.35);
+        color: white;
+        padding: 8px 18px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+    }
 </style>
 
 <div class="loans-container">
@@ -210,18 +220,13 @@
                     <div class="btn-area" style="width: auto; gap: 8px;">
                         @if (!loan.ReturnedDate.HasValue)
                         {
-                            <form method="post" asp-action="Return" asp-route-id="@loan.LoanId" style="display:inline;">
-                                <button type="submit" class="btn-return">Återlämna</button>
-                            </form>
+                            <a asp-action="Details" asp-route-id="@loan.LoanId" class="btn-details">Mer Info</a>
                         }
-                        <form method="post" asp-action="Delete" asp-route-id="@loan.LoanId" style="display:inline;">
-                            <button type="submit" class="btn-delete">Radera</button>
-                        </form>
+                        
                     </div>
                 </div>
             </div>
         }
     }
-
-    <a asp-action="Create" class="btn-create">+ Skapa nytt lån</a>
+    
 </div>

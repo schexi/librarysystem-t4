@@ -47,7 +47,13 @@ public class LoansController : Controller
     // GET-metod för att skapa ett nytt lån
     public IActionResult Create(int itemId)
     {
-        var model = new LoanViewModel { ItemId = itemId }; // ItemId fylls i från URL:en, t.ex. /Loans/Create?itemId=3
+        var model = new LoanViewModel // Med statiska fält temporärt tills jag kan kalla på User-API
+        {
+            ItemId = itemId,
+            DueDate = DateTime.Now.AddDays(28), // Förfallodatum sätts automatiskt 4 veckor framåt
+            BorrowerName = "Admin Test", // TODO: Ska hämtas från Users API när det är klart
+            BorrowerEmail = "admin@mail.com" // TODO: Ska Hämtas från Users API när det är klart
+        };
         return View(model);
     }
 
