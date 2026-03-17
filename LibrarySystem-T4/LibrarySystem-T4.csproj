@@ -8,4 +8,8 @@
       <UserSecretsId>0e968a0f-ef99-438b-8b23-96d2db476efb</UserSecretsId>
   </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Scalar.AspNetCore" Version="2.13.10" />
+    </ItemGroup>
+
 </Project>

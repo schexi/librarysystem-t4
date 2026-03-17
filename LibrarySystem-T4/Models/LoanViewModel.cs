@@ -3,7 +3,7 @@ namespace LibrarySystem_T4.Models;
 // Beskrivning av formulär-data för lån
 public class LoanViewModel
 {
-    public int LoanId { get; set; } // Lån-ID
+    public int Id { get; set; } // Lån-ID
     public int ItemId { get; set; } // Objektets ID
     public string BorrowerName { get; set; } = string.Empty; // Låntagares namn
     public string BorrowerEmail { get; set; } = string.Empty; // Låntagares mail
