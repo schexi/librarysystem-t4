@@ -22,14 +22,14 @@ public class CategoriesController : Controller
     }
 
     // GET /Categories/Create
-    [Authorize] 
+  
     public IActionResult Create()
     {
         return View();
     }
 
     // POST /Categories/Create
-    [Authorize]
+   
     [HttpPost]
     public async Task<IActionResult> Create(Category category)
     {
