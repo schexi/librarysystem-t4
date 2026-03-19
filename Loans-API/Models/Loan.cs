@@ -1,12 +1,17 @@
 namespace LoansApi.Models;
 
+// Representerar ett lån i systemet
 public class Loan
 {
     public int Id { get; set; }
-    public int ItemId { get; set; }
-    public string BorrowerName { get; set; } = string.Empty;
-    public string BorrowerEmail { get; set; } = string.Empty;
-    public DateTime BorrowedDate { get; set; }
-    public DateTime DueDate { get; set; }
-    public DateTime? ReturnedDate { get; set; }
+    public int ItemId { get; set; } // ID för lånat objekt, kopplas till Items API vid driftsättning
+    public string BorrowerName { get; set; } = string.Empty; // Låntagarens namn, kopplas till Users API vid driftsättning
+    public string BorrowerEmail { get; set; } = string.Empty; // Låntagarens email
+    public DateTime BorrowedDate { get; set; } // Sätts automatiskt vid skapande
+    public DateTime DueDate { get; set; } // Förfallodatum
+    public DateTime? ReturnedDate { get; set; } // Null tills lånet återlämnas
+
+    // FK-koppling till LoanStatus (en-till-många)
+    public int LoanStatusId { get; set; } = 1; // Standard: Aktiv
+    public LoanStatus LoanStatus { get; set; } = null!; // Navigationsegenskap
 }

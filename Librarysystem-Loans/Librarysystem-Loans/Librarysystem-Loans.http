@@ -1,6 +1,0 @@
-@Librarysystem_Loans_HostAddress = http://localhost:5171
-
-GET {{Librarysystem_Loans_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
