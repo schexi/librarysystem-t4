@@ -1,0 +1,148 @@
+@model LibrarySystem_T4.Models.LoanViewModel
+
+@{
+    ViewData["Title"] = "Skapa lån";
+}
+
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    h1 {
+        color: white;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 24px;
+    }
+
+    .form-card {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: 14px;
+        padding: 32px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        color: white;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        opacity: 0.8;
+        margin-bottom: 6px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px 14px;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.25);
+        border-radius: 8px;
+        color: white;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    input[readonly] {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    input::placeholder {
+        opacity: 0.5;
+        color: white;
+    }
+
+    input:focus:not([readonly]) {
+        outline: none;
+        border-color: rgba(255,255,255,0.6);
+        background: rgba(255,255,255,0.18);
+    }
+
+    .field-note {
+        font-size: 11px;
+        color: rgba(255,255,255,0.5);
+        margin-top: 4px;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background: #06d6a0;
+        border: none;
+        border-radius: 8px;
+        color: #04342c;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 8px;
+    }
+
+    .btn-cancel {
+        display: block;
+        text-align: center;
+        margin-top: 16px;
+        color: rgba(255,255,255,0.7);
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+    .btn-cancel:hover {
+        color: white;
+    }
+
+    span.text-danger {
+        color: #ff6b6b;
+        font-size: 12px;
+        margin-top: 4px;
+        display: block;
+    }
+</style>
+
+<div class="form-container">
+    <h1>Skapa lån</h1>
+
+    <div class="form-card">
+        <form asp-action="Create" method="post">
+
+            @* ItemId låst — hämtas från Items API via URL *@
+            <div class="form-group">
+                <label asp-for="ItemId">Objekt-ID</label>
+                <input asp-for="ItemId" readonly />
+                <span class="field-note">Hämtas automatiskt från valt objekt</span>
+            </div>
+
+            @* Namn låst — hämtas från Users API *@
+            <div class="form-group">
+                <label asp-for="BorrowerName">Namn</label>
+                <input asp-for="BorrowerName" readonly />
+                <span class="field-note">Hämtas från inloggad användare</span>
+            </div>
+
+            @* Email låst — hämtas från Users API *@
+            <div class="form-group">
+                <label asp-for="BorrowerEmail">E-post</label>
+                <input asp-for="BorrowerEmail" readonly />
+                <span class="field-note">Hämtas från inloggad användare</span>
+            </div>
+
+            @* Förfallodatum låst — sätts automatiskt 4 veckor framåt *@
+            <div class="form-group">
+                <label asp-for="DueDate">Förfallodatum</label>
+                <input asp-for="DueDate" type="date" readonly />
+                <span class="field-note">Sätts automatiskt till 4 veckor från idag</span>
+            </div>
+
+            <button type="submit" class="btn-submit">Bekräfta lån</button>
+        </form>
+
+        <a asp-action="Index" class="btn-cancel">← Tillbaka till lånelistan</a>
+    </div>
+</div>
