@@ -1,12 +1,22 @@
+<<<<<<< categories-frontend
+using LibrarySystem_T4.Services;
+=======
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+>>>>>>> loans-frontend
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
+
+// Registrerar HttpClient som anropar CategoriesApi
+builder.Services.AddHttpClient<CategoryService>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5035/");
+});
 
 var app = builder.Build();
 
