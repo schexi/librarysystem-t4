@@ -7,13 +7,13 @@ namespace Items_API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ItemsControllers : ControllerBase
+public class ItemsController : ControllerBase
 {
     // Denna är databaskopplingen för metoderna
     private readonly AppDbContext _context;
     
     // Denna tar emot databas
-    public ItemsControllers(AppDbContext context)
+    public ItemsController(AppDbContext context)
     {
         _context = context;
     }
@@ -63,5 +63,4 @@ public class ItemsControllers : ControllerBase
         await _context.SaveChangesAsync();
         return NoContent();
     }
-
 }
