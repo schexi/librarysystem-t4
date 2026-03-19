@@ -1,0 +1,228 @@
+@model List<LibrarySystem_T4.Models.LoanViewModel>
+
+@{
+    ViewData["Title"] = "Mina lån";
+}
+
+<style>
+    .loans-container {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    h1 {
+        color: white;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 24px;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 24px;
+    }
+
+    .tab {
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid rgba(255,255,255,0.25);
+        color: white;
+        background: rgba(255,255,255,0.08);
+        text-decoration: none;
+        transition: background 0.2s;
+    }
+
+    .tab.active {
+        background: white;
+        color: #0f4c75;
+        border-color: white;
+    }
+
+    .tab:hover:not(.active) {
+        background: rgba(255,255,255,0.18);
+        color: white;
+    }
+
+    .empty-message {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: 14px;
+        padding: 40px;
+        text-align: center;
+        color: white;
+    }
+
+    .loan-card {
+        background: rgba(255,255,255,0.85);
+        border: 1px solid rgba(255,255,255,0.95);
+        border-radius: 14px;
+        padding: 18px 20px;
+        margin-bottom: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .card-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-width: 200px;
+    }
+
+    .card-top {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .card-bottom {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .card-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 12px;
+        margin-right: 16px;
+    }
+
+    .loan-id {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #1b9aaa;
+    }
+
+    .loan-item {
+        font-size: 15px;
+        font-weight: 600;
+        color: #0d3b6e;
+    }
+
+    .loan-name {
+        font-size: 12px;
+        color: #0d3b6e;
+        opacity: 0.8;
+    }
+
+    .loan-email {
+        font-size: 12px;
+        color: #1b9aaa;
+    }
+
+    .dates {
+        display: flex;
+        flex-direction: row;
+        gap: 24px;
+        align-items: flex-start;
+    }
+
+    .date-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .date-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #0d3b6e;
+        opacity: 0.6;
+    }
+
+    .date-val {
+        font-size: 13px;
+        font-weight: 500;
+        color: #0d3b6e;
+    }
+
+    .btn-details {
+        background: #0d3b6e;
+        border: none;
+        color: white;
+        padding: 8px 18px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .btn-details:hover {
+        background: #1b9aaa;
+        color: white;
+    }
+</style>
+
+<div class="loans-container">
+    <h1>Mina lån</h1>
+
+    @{
+        var aktiva = Model.Where(l => !l.ReturnedDate.HasValue).ToList();
+        var tidigare = Model.Where(l => l.ReturnedDate.HasValue).ToList();
+        var visaAktiva = Context.Request.Query["tab"] != "tidigare";
+    }
+
+    <div class="tabs">
+        <a href="?tab=aktiva" class="tab @(visaAktiva ? "active" : "")">
+            Aktiva lån (@aktiva.Count)
+        </a>
+        <a href="?tab=tidigare" class="tab @(!visaAktiva ? "active" : "")">
+            Tidigare lån (@tidigare.Count)
+        </a>
+    </div>
+
+    @{
+        var visaLån = visaAktiva ? aktiva : tidigare;
+    }
+
+    @if (!visaLån.Any())
+    {
+        <div class="empty-message">
+            @(visaAktiva ? "Inga aktiva lån." : "Inga tidigare lån.")
+        </div>
+    }
+    else
+    {
+        @foreach (var loan in visaLån)
+        {
+            <div class="loan-card">
+                <div class="card-left">
+                    <span class="loan-id">Lån #@loan.Id</span>
+                    <span class="loan-item">Objekt #@loan.ItemId</span>
+                    <div style="margin-top: 18px;">
+                        <span class="loan-name">@loan.BorrowerName</span><br/>
+                        <span class="loan-email">@loan.BorrowerEmail</span>
+                    </div>
+                </div>
+
+                <div class="card-right">
+                    <div class="dates">
+                        <div class="date-block">
+                            <span class="date-label">Utlånad</span>
+                            <span class="date-val">@loan.BorrowedDate.ToShortDateString()</span>
+                        </div>
+                        <div class="date-block">
+                            <span class="date-label">Förfaller</span>
+                            <span class="date-val">@loan.DueDate.ToShortDateString()</span>
+                        </div>
+                    </div>
+                    <a asp-action="Details" asp-route-id="@loan.Id" class="btn-details">Detaljer</a>
+                </div>
+            </div>
+        }
+    }
+</div>
+}
