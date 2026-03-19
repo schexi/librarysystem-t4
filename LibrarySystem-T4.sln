@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrarySystem-T4", "Library
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loans-API", "Loans-API\Loans-API.csproj", "{B4639455-37BE-4FD2-8583-1C4B48D4AFB0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Items-API", "Items-API\Items-API.csproj", "{88194948-9880-4154-A796-C37C703DE00A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,18 @@ Global
 		{B4639455-37BE-4FD2-8583-1C4B48D4AFB0}.Release|x64.Build.0 = Release|Any CPU
 		{B4639455-37BE-4FD2-8583-1C4B48D4AFB0}.Release|x86.ActiveCfg = Release|Any CPU
 		{B4639455-37BE-4FD2-8583-1C4B48D4AFB0}.Release|x86.Build.0 = Release|Any CPU
+		{88194948-9880-4154-A796-C37C703DE00A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88194948-9880-4154-A796-C37C703DE00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88194948-9880-4154-A796-C37C703DE00A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{88194948-9880-4154-A796-C37C703DE00A}.Debug|x64.Build.0 = Debug|Any CPU
+		{88194948-9880-4154-A796-C37C703DE00A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{88194948-9880-4154-A796-C37C703DE00A}.Debug|x86.Build.0 = Debug|Any CPU
+		{88194948-9880-4154-A796-C37C703DE00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88194948-9880-4154-A796-C37C703DE00A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88194948-9880-4154-A796-C37C703DE00A}.Release|x64.ActiveCfg = Release|Any CPU
+		{88194948-9880-4154-A796-C37C703DE00A}.Release|x64.Build.0 = Release|Any CPU
+		{88194948-9880-4154-A796-C37C703DE00A}.Release|x86.ActiveCfg = Release|Any CPU
+		{88194948-9880-4154-A796-C37C703DE00A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
