@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - HV-Biblioteket</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/LibrarySystem_T4.styles.css" asp-append-version="true"/>
+    <style>
+        body {
+            background: linear-gradient(to top right, #0a3a6e 0%, #0a7a9a 50%, #12c98a 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: rgba(10, 90, 90, 0.7) !important;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.2) !important;
+        }
+
+        .navbar-brand, .nav-link {
+            color: rgba(255,255,255,0.85) !important;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .btn-login {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 20px;
+            padding: .3rem 1rem;
+            font-size: .85rem;
+        }
+
+        .btn-login:hover {
+            background: rgba(255,255,255,0.25);
+            color: white;
+        }
+
+        /* MAIN */
+        .container {
+            padding-top: 1rem;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: rgba(10, 90, 90, 0.7);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255,255,255,0.2) !important;
+            color: rgba(255,255,255,0.6) !important;
+            padding: 1rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer a {
+            color: rgba(255,255,255,0.6);
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Logo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Categories" asp-action="Index">Kategorier</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="btn btn-login">Logged in</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+
+<footer class="footer border-top">
+    <div class="container">
+        &copy; 2026 HV-Biblioteket. All rights reserved.
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

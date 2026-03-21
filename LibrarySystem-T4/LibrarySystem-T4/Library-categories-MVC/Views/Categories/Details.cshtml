@@ -1,0 +1,37 @@
+@model LibrarySystem_T4.Models.Category
+@using LibrarySystem_T4.Models
+@{
+    var items = ViewBag.Items as List<Item> ?? new List<Item>();
+}
+
+<div class="container mt-4">
+    <a asp-action="Index" style="color:rgba(255,255,255,0.7); text-decoration:none;">← Tillbaka</a>
+    
+    <h2 style="color:white; font-weight:700; margin-top:1rem;">@Model.Name</h2>
+    <p style="color:rgba(255,255,255,0.75);">@Model.Description</p>
+
+    <div class="mt-4">
+        @if (!items.Any())
+        {
+            <p style="color:rgba(255,255,255,0.5); font-style:italic;">Inga items hittades i denna kategori.</p>
+        }
+        else
+        {
+            @foreach (var item in items)
+            {
+                <div style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); border-radius:12px; padding:1rem 1.25rem; margin-bottom:.75rem; backdrop-filter:blur(8px); display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div style="color:white; font-weight:600;">@item.Title</div>
+                        <div style="color:rgba(255,255,255,0.6); font-size:.85rem;">@item.Author · @item.Type</div>
+                    </div>
+                    <span style="padding:.25rem .75rem; border-radius:20px; font-size:.75rem; font-weight:600;
+                          background:@(item.IsAvailable ? "rgba(60,220,120,0.25)" : "rgba(220,80,80,0.2)");
+                          color:@(item.IsAvailable ? "#7fffb2" : "#ffaaaa");
+                          border:1px solid @(item.IsAvailable ? "rgba(60,220,120,0.3)" : "rgba(220,80,80,0.3)");">
+                        @(item.IsAvailable ? "Tillgänglig" : "Utlånad")
+                    </span>
+                </div>
+            }
+        }
+    </div>
+</div>
