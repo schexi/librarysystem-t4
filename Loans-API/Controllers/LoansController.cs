@@ -18,13 +18,11 @@ public class LoansController : ControllerBase
         _context = context;
     }
 
-    // GET: api/loans - Hämtar alla lån med tillhörande status
+    // GET: api/loans - Hämtar alla lån
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var loans = await _context.Loans
-            .Include(l => l.LoanStatus) // Inkluderar statusobjektet via FK
-            .ToListAsync();
+        var loans = await _context.Loans.ToListAsync();
         return Ok(loans);
     }
 
@@ -32,19 +30,16 @@ public class LoansController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var loan = await _context.Loans
-            .Include(l => l.LoanStatus)
-            .FirstOrDefaultAsync(l => l.Id == id);
+        var loan = await _context.Loans.FindAsync(id);
         if (loan == null) return NotFound();
         return Ok(loan);
     }
 
-    // GET: api/loans/overdue - Hämtar alla försenade lån
+    // GET: api/loans/overdue - Hämtar alla försenade lån (förfallna och ej återlämnade)
     [HttpGet("overdue")]
     public async Task<IActionResult> GetOverdue()
     {
         var overdue = await _context.Loans
-            .Include(l => l.LoanStatus)
             .Where(l => l.DueDate < DateTime.Now && l.ReturnedDate == null)
             .ToListAsync();
         return Ok(overdue);
@@ -55,33 +50,18 @@ public class LoansController : ControllerBase
     public async Task<IActionResult> Create(Loan loan)
     {
         loan.BorrowedDate = DateTime.Now; // Sätts automatiskt
-        loan.LoanStatusId = 1; // Sätts till "Aktiv" som standard
         _context.Loans.Add(loan);
-        await _context.SaveChangesAsync(); // Skriver in det nya lånet i loans.db databasen
+        await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetById), new { id = loan.Id }, loan);
     }
 
-    // PUT: api/loans/{id}/return - Återlämnar ett lån
+    // PUT: api/loans/{id}/return - Återlämnar ett lån, sätter ReturnedDate
     [HttpPut("{id}/return")]
     public async Task<IActionResult> Return(int id)
     {
         var loan = await _context.Loans.FindAsync(id);
         if (loan == null) return NotFound();
-        loan.ReturnedDate = DateTime.Now; // Sätts automatiskt vid återlämning
-        loan.LoanStatusId = 3; // Uppdaterar status till "Återlämnad"
-        await _context.SaveChangesAsync();
-        return NoContent();
-    }
-
-    // PUT: api/loans/{id}/status - Uppdaterar status på ett lån manuellt
-    [HttpPut("{id}/status")]
-    public async Task<IActionResult> UpdateStatus(int id, [FromBody] int statusId)
-    {
-        var loan = await _context.Loans.FindAsync(id);
-        if (loan == null) return NotFound();
-        var status = await _context.LoanStatuses.FindAsync(statusId);
-        if (status == null) return BadRequest("Ogiltig status");
-        loan.LoanStatusId = statusId; // Uppdaterar till vald status
+        loan.ReturnedDate = DateTime.Now; // Lånet markeras som återlämnat
         await _context.SaveChangesAsync();
         return NoContent();
     }

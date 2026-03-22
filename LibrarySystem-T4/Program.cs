@@ -12,6 +12,7 @@ builder.Services.AddHttpClient<CategoryService>(client =>
     client.BaseAddress = new Uri("http://localhost:5035/");
 });
 
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
