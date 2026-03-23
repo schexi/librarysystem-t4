@@ -56,4 +56,5 @@ public class LoanService
             _config["ApiUrls:Loans"] + $"/api/loans/{id}"
         );
     }
+    
 }
