@@ -4,13 +4,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Registrerar tjänster
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient(); // Generell HttpClient för Loans API
 
-// Http-client som anropar Loans-API
-builder.Services.AddHttpClient<LoanService>(client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["ApiUrls:Loans"]!);
-} );
+// Registrerar LoanService med HttpClient och ASP.net Core DI
+// Ersätter Loans-API tidigare generella Http-Client
+builder.Services.AddHttpClient<LoanService>();
 
 // Registrerar HttpClient som anropar Categories API
 builder.Services.AddHttpClient<CategoryService>(client =>
