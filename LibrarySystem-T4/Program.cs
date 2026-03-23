@@ -6,6 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient(); // Generell HttpClient för Loans API
 
+// Http-client som anropar Loans-API
+builder.Services.AddHttpClient<LoanService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiUrls:Loans"]!);
+} );
+
 // Registrerar HttpClient som anropar Categories API
 builder.Services.AddHttpClient<CategoryService>(client =>
 {
