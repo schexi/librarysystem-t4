@@ -12,7 +12,7 @@ builder.Services.AddHttpClient<LoanService>();
 // Registrerar HttpClient som anropar Categories API
 builder.Services.AddHttpClient<CategoryService>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5035/");
+    client.BaseAddress = new Uri("http://localhost:5034/");
 });
 
 

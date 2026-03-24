@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+/*using Microsoft.AspNetCore.Mvc;
 using LibrarySystem_T4.Models;
 using LibrarySystem_T4.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -22,14 +22,14 @@ public class CategoriesController : Controller
     }
 
     // GET /Categories/Create
-  
+
     public IActionResult Create()
     {
         return View();
     }
 
     // POST /Categories/Create
-   
+
     [HttpPost]
     public async Task<IActionResult> Create(Category category)
     {
@@ -60,4 +60,37 @@ public class CategoriesController : Controller
         await _service.DeleteAsync(id);
         return RedirectToAction(nameof(Index));
     }
+}*/
+
+
+using Microsoft.AspNetCore.Mvc;
+using LibrarySystem_T4.Services;
+
+namespace LibrarySystem_T4.Controllers;
+
+public class CategoriesController : Controller
+{
+    private readonly CategoryService _categoryService;
+
+    public CategoriesController(CategoryService categoryService)
+    {
+        _categoryService = categoryService;
+    }
+
+    // Vanlig användare: ser bara listan
+    public async Task<IActionResult> Index()
+    {
+        var categories = await _categoryService.GetAllAsync();
+        return View(categories);
+    }
+
+    // Vanlig användare: kan se detaljer om du vill ha det
+    public async Task<IActionResult> Details(int id)
+    {
+        var category = await _categoryService.GetByIdAsync(id);
+        if (category == null) return NotFound();
+
+        return View(category);
+    }
 }
+

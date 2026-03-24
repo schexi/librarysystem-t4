@@ -12,27 +12,27 @@ public class CategoryService
     }
 
     // Hämtar alla kategorier från API:et
-    public async Task<List<Category>> GetAllAsync()
+    public async Task<List<CategoryViewModel>> GetAllAsync()
     {
-        return await _http.GetFromJsonAsync<List<Category>>("api/categories") ?? new();
+        return await _http.GetFromJsonAsync<List<CategoryViewModel>>("api/categories") ?? new();
     }
 
     // Hämtar en specifik kategori
-    public async Task<Category?> GetByIdAsync(int id)
+    public async Task<CategoryViewModel?> GetByIdAsync(int id)
     {
-        return await _http.GetFromJsonAsync<Category>($"api/categories/{id}");
+        return await _http.GetFromJsonAsync<CategoryViewModel>($"api/categories/{id}");
     }
 
     // Skapar en ny kategori
-    public async Task CreateAsync(Category category)
+    public async Task CreateAsync(CategoryViewModel categoryViewModel)
     {
-        await _http.PostAsJsonAsync("api/categories", category);
+        await _http.PostAsJsonAsync("api/categories", categoryViewModel);
     }
 
     // Uppdaterar en kategori
-    public async Task UpdateAsync(int id, Category category)
+    public async Task UpdateAsync(int id, CategoryViewModel categoryViewModel)
     {
-        await _http.PutAsJsonAsync($"api/categories/{id}", category);
+        await _http.PutAsJsonAsync($"api/categories/{id}", categoryViewModel);
     }
 
     // Tar bort en kategori
