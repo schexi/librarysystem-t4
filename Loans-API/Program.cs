@@ -5,8 +5,6 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:5100"); // Port för Loans API
-
 // Registrerar tjänster
 builder.Services.AddControllers();
 builder.Services.AddOpenApi(); // OpenAPI/Scalar för API-dokumentation
