@@ -5,26 +5,41 @@ using Library.User.Api.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Lägg till MVC
 builder.Services.AddControllersWithViews();
+
+// Swagger (för API-dokumentation)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// SQLite-databas
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite("Data Source=library.db"));
 
+// Cookie-baserad autentisering
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath  = "/Authorization/Login";
-        options.LogoutPath = "/api/auth/logout";
+        options.LoginPath = "/Authorization/Login";
+        options.LogoutPath = "/Authorization/Logout";
         options.ExpireTimeSpan = TimeSpan.FromHours(8);
     });
 
 builder.Services.AddAuthorization();
 
+// CORS för frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+        policy.WithOrigins("https://localhost:3000") // ändra till din frontend-port
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+});
+
 var app = builder.Build();
 
-// Seed databas
+// Seed databasen
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -40,14 +55,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseRouting();
-app.UseAuthentication();
-app.UseAuthorization();
 
+app.UseRouting();
+
+app.UseCors("FrontendPolicy"); // Viktigt!
+app.UseAuthentication();        // Kör autentisering
+app.UseAuthorization();         // Kör auktorisering
+
+// Default route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Authorization}/{action=Login}/{id?}");
 
+// API controllers
 app.MapControllers();
 
 app.Run();

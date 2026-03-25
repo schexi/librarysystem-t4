@@ -1,44 +1,40 @@
 @{
-    ViewData["Title"] = "Profil";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Kopplar layouten
+    ViewData["Title"] = "Min profil";
 }
 
-<h1 class="page-title">Profil</h1>
+<h2>Min profil</h2>
 
-<div class="glass-card">
-    <div class="stats-grid">
-        <div class="stat-box">
-            <label>Användarnamn</label>
-            <div id="usernameVal" class="stat-value" style="font-size:1.3rem">–</div>
-        </div>
-        <div class="stat-box">
-            <label>E-post</label>
-            <div id="emailVal" class="stat-value" style="font-size:1.1rem">–</div>
-        </div>
-        <div class="stat-box">
-            <label>Aktiva lån</label>
-            <div id="loansVal" class="stat-value">–</div>
-        </div>
-        <div class="stat-box">
-            <label>Roll</label>
-            <div id="roleVal" class="stat-value" style="font-size:1.3rem">–</div>
-        </div>
-    </div>
-    <div style="margin-top:20px;text-align:center">
-        <a href="/User/Update" class="btn-primary" style="display:inline-block;width:auto;padding:10px 32px">Uppdatera profil</a>
-    </div>
-</div>
+<div id="profile">Laddar profil...</div>
 
 @section Scripts {
-    <script>
-(async () => {
-    const res = await apiFetch('/api/user/me');
-    if (!res.ok) { window.location.href = '/Authorization/Login'; return; }
-    const { user, activeLoans } = await res.json();
-    document.getElementById('usernameVal').textContent = user.username;
-    document.getElementById('emailVal').textContent    = user.email;
-    document.getElementById('loansVal').textContent    = activeLoans;
-    document.getElementById('roleVal').textContent     = user.role;
-})();
+<script>
+    async function loadProfile() {
+        try {
+            const res = await fetch('/api/user/me', { credentials: 'include' });
+            if (!res.ok) {
+                document.getElementById('profile').innerHTML = 'Kunde inte ladda profilen.';
+                return;
+            }
+            const data = await res.json();
+
+            const user = data.user;
+            const activeLoans = data.activeLoans;
+
+            document.getElementById('profile').innerHTML = `
+            <p><strong>Användarnamn:</strong> ${user.username}</p>
+            <p><strong>Förnamn:</strong> ${user.firstName}</p>
+            <p><strong>Efternamn:</strong> ${user.lastName}</p>
+            <p><strong>Email:</strong> ${user.email}</p>
+            <p><strong>Aktiva lån:</strong> ${activeLoans}</p>
+        `;
+        } catch (error) {
+            console.error(error);
+            document.getElementById('profile').innerHTML = 'Fel vid laddning av profilen.';
+        }
+}
+
+    // Kör funktionen efter att den definierats
+    loadProfile();
 </script>
 }

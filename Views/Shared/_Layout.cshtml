@@ -1,48 +1,17 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html>
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>HV Bibliotek – @ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/site.css"/>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-<nav class="navbar">
-    <a href="/" class="navbar-logo">📚 HV Bibliotek</a>
-    <ul class="navbar-links">
-        <li><a href="/User/Profile">Min profil</a></li>
-        <li><a href="/User/Update">Uppdatera</a></li>
-        @if (User.IsInRole("Admin"))
-        {
-            <li><a href="/Admin">Admin</a></li>
-        }
-    </ul>
-    <div class="navbar-right">
-        @if (User.Identity?.IsAuthenticated == true)
-        {
-            <svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-            <form action="/api/auth/logout" method="get" style="display:inline">
-                <button type="submit" class="btn-nav">Logga ut</button>
-            </form>
-        }
-        else
-        {
-            <a href="/Authorization/Login" class="btn-nav">Logga in</a>
-        }
-    </div>
-</nav>
+<div class="container">
+    @RenderBody()
+</div>
 
-@RenderBody()
+<script src="~/js/site.js"></script>
 
-<footer>© 2026 HV Bibliotek. All rights reserved.</footer>
-
-<script>
-// Hjälpfunktion för API-anrop med credentials
-async function apiFetch(url, options = {}) {
-    const res = await fetch(url, { credentials: 'include', headers: { 'Content-Type': 'application/json' }, ...options });
-    return res;
-}
-</script>
-@RenderSection("Scripts", required: false)
+@RenderSection("Scripts", required: false) <!-- Viktigt -->
 </body>
 </html>

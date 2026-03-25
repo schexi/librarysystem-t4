@@ -320,4 +320,5 @@
 /Users/adde/Documents/GitHub/librarysystem-t4/bin/Debug/net10.0/BCrypt.Net-Next.dll
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Debug/net10.0/Library.User.Api.RazorAssemblyInfo.cache
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Debug/net10.0/Library.User.Api.RazorAssemblyInfo.cs
-/Users/adde/Documents/GitHub/librarysystem-t4/obj/Debug/net10.0/compressed/ewdlsex5z7-{0}-yn03py1vht-yn03py1vht.gz
+/Users/adde/Documents/GitHub/librarysystem-t4/obj/Debug/net10.0/compressed/awm7ubwqkf-{0}-yn03py1vht-yn03py1vht.gz
+/Users/adde/Documents/GitHub/librarysystem-t4/obj/Debug/net10.0/compressed/v9npse5wpp-{0}-b7k7al5wc4-b7k7al5wc4.gz

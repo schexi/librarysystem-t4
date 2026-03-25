@@ -96,4 +96,5 @@ public class UserViewController : Controller
 
     [HttpGet("Update")]
     public IActionResult Update() => View();
+    
 }
