@@ -33,4 +33,4 @@ public class NotificationsController : Controller
 
         return View(notifications);
     }
-}
+}¨
