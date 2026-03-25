@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using Library.User.Api.Data;
 using Library.User.Api.Models;
 using Library.User.Api.Models.Entities;
@@ -7,9 +9,26 @@ using Library.User.Api.Models.Entities;
 namespace Library.User.Api.Controllers;
 
 [ApiController]
-[Route("api/users")]
-public class UsersController(ApplicationDbContext context) : ControllerBase
+[Route("api/user")]
+[Authorize]
+public class UserController(ApplicationDbContext context) : ControllerBase
 {
+    [HttpGet("me")]
+    public async Task<IActionResult> GetMe()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var user = await context.Users.FindAsync(userId);
+        var activeLoans = await context.Loans.CountAsync(l => l.UserId == userId && !l.IsReturned);
+        return user == null ? NotFound() : Ok(new { user, activeLoans });
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var user = await context.Users.FindAsync(id);
+        return user == null ? NotFound() : Ok(user);
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetUsers()
     {
@@ -17,70 +36,64 @@ public class UsersController(ApplicationDbContext context) : ControllerBase
         return Ok(users);
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetUser(int id)
-    {
-        var user = await context.Users.FindAsync(id);
-        if (user == null) return NotFound("Användaren hittades inte.");
-        return Ok(user);
-    }
-
     [HttpPost]
-    public async Task<IActionResult> AddUser(AddUserDto dto)
+    [AllowAnonymous]
+    public async Task<IActionResult> AddUser([FromBody] AddUserDto dto)
     {
+        if (await context.Users.AnyAsync(u => u.Username == dto.Username))
+            return BadRequest("Användarnamnet är redan taget.");
+
         var user = new UserEntity
         {
-            Name = dto.Name,
-            LastName = dto.LastName,
-            Email = dto.Email,
-            EmployeeId = dto.EmployeeId,
-            PasswordHash = dto.PasswordHash,
-            Role = "User" // Standardroll
+            FirstName    = dto.FirstName,
+            LastName     = dto.LastName,
+            Email        = dto.Email,
+            Username     = dto.Username,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash),
+            Role         = "User"
         };
 
         context.Users.Add(user);
         await context.SaveChangesAsync();
-
         return Ok(user);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateUser(int id, UpdateUser dto)
+    [HttpPut("update")]
+    public async Task<IActionResult> Update([FromBody] UpdateUserDto dto)
     {
-        var user = await context.Users.FindAsync(id);
-        if (user == null) return NotFound("Användaren finns inte.");
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var user   = await context.Users.FindAsync(userId);
+        if (user == null) return NotFound();
 
-        user.Name = dto.Name;
-        user.LastName = dto.LastName;
-        user.Email = dto.Email;
-        user.EmployeeId = dto.EmployeeId;
-        user.PasswordHash = dto.PasswordHash;
-        // Här kan du även lägga till user.Role = dto.Role om du vill kunna ändra roll via PUT
+        user.FirstName = dto.FirstName;
+        user.LastName  = dto.LastName;
+        user.Email     = dto.Email;
+
+        if (!string.IsNullOrEmpty(dto.PasswordHash))
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash);
 
         await context.SaveChangesAsync();
         return Ok(user);
     }
 
-    [HttpPatch("{id}/make-admin")]
-    public async Task<IActionResult> MakeAdmin(int id)
-    {
-        var user = await context.Users.FindAsync(id);
-        if (user == null) return NotFound("Användaren hittades inte.");
-
-        user.Role = "Admin"; 
-        await context.SaveChangesAsync();
-
-        return Ok($"{user.Name} är nu Admin!");
-    }
-
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteUser(int id)
     {
         var user = await context.Users.FindAsync(id);
         if (user == null) return NotFound();
-
         context.Users.Remove(user);
         await context.SaveChangesAsync();
-        return Ok("Användare raderad.");
+        return Ok();
     }
+}
+
+[Route("User")]
+[Authorize]
+public class UserViewController : Controller
+{
+    [HttpGet("Profile")]
+    public IActionResult Profile() => View();
+
+    [HttpGet("Update")]
+    public IActionResult Update() => View();
 }

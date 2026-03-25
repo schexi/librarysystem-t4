@@ -1,0 +1,79 @@
+@{
+    ViewData["Title"] = "Användarlista";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="table-wrapper" style="margin-top:20px">
+    <div class="table-header">
+        <h2>Alla användare</h2>
+        <input class="search-input" id="search" placeholder="Sök..." oninput="filterTable()"/>
+    </div>
+
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Namn</th>
+                <th>Användarnamn</th>
+                <th>E-post</th>
+                <th>Roll</th>
+                <th>Åtgärder</th>
+            </tr>
+        </thead>
+        <tbody id="userBody"></tbody>
+    </table>
+</div>
+
+@section Scripts {
+<script>
+let allUsers = [];
+
+(async () => {
+    const res = await apiFetch('/api/admin/user-list');
+    if (!res.ok) return;
+    allUsers = await res.json();
+    renderTable(allUsers);
+})();
+
+function renderTable(users) {
+    const body = document.getElementById('userBody');
+    body.innerHTML = users.map(u => `
+        <tr>
+            <td>${u.id}</td>
+            <td>${u.firstName} ${u.lastName}</td>
+            <td>${u.username}</td>
+            <td>${u.email}</td>
+            <td>
+                <select onchange="changeRole(${u.id}, this.value)" style="background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:6px;padding:3px 8px;font-family:Outfit,sans-serif">
+                    <option value="User"  ${u.role==='User'  ? 'selected':''}>User</option>
+                    <option value="Admin" ${u.role==='Admin' ? 'selected':''}>Admin</option>
+                </select>
+            </td>
+            <td>
+                <button class="btn-danger" onclick="deleteUser(${u.id})">Radera</button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function filterTable() {
+    const q = document.getElementById('search').value.toLowerCase();
+    renderTable(allUsers.filter(u =>
+        u.firstName.toLowerCase().includes(q) ||
+        u.lastName.toLowerCase().includes(q)  ||
+        u.username.toLowerCase().includes(q)  ||
+        u.email.toLowerCase().includes(q)
+    ));
+}
+
+async function changeRole(id, newRole) {
+    await apiFetch(`/api/admin/user/${id}/change-role?newRole=${newRole}`, { method: 'PATCH' });
+}
+
+async function deleteUser(id) {
+    if (!confirm('Säker på att du vill radera användaren?')) return;
+    const res = await apiFetch(`/api/admin/user/${id}`, { method: 'DELETE' });
+    if (res.ok) allUsers = allUsers.filter(u => u.id !== id), renderTable(allUsers);
+}
+</script>
+}

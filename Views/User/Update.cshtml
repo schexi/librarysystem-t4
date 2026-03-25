@@ -1,0 +1,67 @@
+@{
+    ViewData["Title"] = "Uppdatera profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="page-title">Updatera profil</h1>
+
+<div class="glass-card">
+    <div id="alertBox" class="alert alert-error"></div>
+    <div id="successBox" class="alert alert-success"></div>
+    <div class="form-row">
+        <div class="form-group">
+            <label>Förnamn</label>
+            <input id="firstName" class="form-control" type="text"/>
+        </div>
+        <div class="form-group">
+            <label>Efternamn</label>
+            <input id="lastName" class="form-control" type="text"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>E-post</label>
+        <input id="email" class="form-control" type="email"/>
+    </div>
+    <div class="form-group">
+        <label>Nytt lösenord <span style="opacity:.6">(lämna tomt för oförändrat)</span></label>
+        <input id="password" class="form-control" type="password"/>
+    </div>
+    <button class="btn-primary" onclick="updateProfile()">Spara ändringar</button>
+</div>
+
+@section Scripts {
+<script>
+// Fyll i befintliga värden
+(async () => {
+    const res = await apiFetch('/api/user/me');
+    if (!res.ok) return;
+    const { user } = await res.json();
+    document.getElementById('firstName').value = user.firstName;
+    document.getElementById('lastName').value  = user.lastName;
+    document.getElementById('email').value     = user.email;
+})();
+
+async function updateProfile() {
+    const alertBox   = document.getElementById('alertBox');
+    const successBox = document.getElementById('successBox');
+    alertBox.style.display = 'none';
+
+    const body = {
+        firstName:    document.getElementById('firstName').value,
+        lastName:     document.getElementById('lastName').value,
+        email:        document.getElementById('email').value,
+        passwordHash: document.getElementById('password').value || null
+    };
+
+    const res = await apiFetch('/api/user/update', { method: 'PUT', body: JSON.stringify(body) });
+
+    if (res.ok) {
+        successBox.textContent = 'Profilen har uppdaterats!';
+        successBox.style.display = 'block';
+    } else {
+        alertBox.textContent = 'Något gick fel.';
+        alertBox.style.display = 'block';
+    }
+}
+</script>
+}

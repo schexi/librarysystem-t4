@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.3" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.3" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.3">
@@ -19,6 +20,24 @@
         </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
         <PackageReference Include="Microsoft.OpenApi" Version="1.6.22" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Data\Views\Authorization\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Data\Views\Authorization\Register.cshtml" />
+      <_ContentIncludedByDefault Remove="Data\Views\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Data\Views\User\Profile.cshtml" />
+      <_ContentIncludedByDefault Remove="Data\Views\User\Update.cshtml" />
+      <_ContentIncludedByDefault Remove="Models\Views\Authorization\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Models\Views\Authorization\Register.cshtml" />
+      <_ContentIncludedByDefault Remove="Models\Views\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Models\Views\User\Profile.cshtml" />
+      <_ContentIncludedByDefault Remove="Models\Views\User\Update.cshtml" />
+      <_ContentIncludedByDefault Remove="Models\Entities\Views\Authorization\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Models\Entities\Views\Authorization\Register.cshtml" />
+      <_ContentIncludedByDefault Remove="Models\Entities\Views\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Models\Entities\Views\User\Profile.cshtml" />
+      <_ContentIncludedByDefault Remove="Models\Entities\Views\User\Update.cshtml" />
     </ItemGroup>
 
 </Project>

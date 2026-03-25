@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "RPqoC29qPKM=",
+  "dgSpecHash": "hQ8M+HRGBwk=",
   "success": true,
-  "projectFilePath": "/Users/adde/RiderProjects/Library.User.Api/Library.User.Api/Library.User.Api.csproj",
+  "projectFilePath": "/Users/adde/Documents/GitHub/librarysystem-t4/Library.User.Api.csproj",
   "expectedPackageFiles": [
+    "/Users/adde/.nuget/packages/bcrypt.net-next/4.1.0/bcrypt.net-next.4.1.0.nupkg.sha512",
     "/Users/adde/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/adde/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/10.0.3/microsoft.aspnetcore.authentication.jwtbearer.10.0.3.nupkg.sha512",
     "/Users/adde/.nuget/packages/microsoft.build.framework/18.0.2/microsoft.build.framework.18.0.2.nupkg.sha512",

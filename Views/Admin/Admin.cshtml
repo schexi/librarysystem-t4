@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="page-title">Admin</h1>
+
+<div class="glass-card">
+    <div class="stats-grid">
+        <div class="stat-box">
+            <label>Totalt användare</label>
+            <div id="totalVal" class="stat-value">–</div>
+        </div>
+        <div class="stat-box">
+            <label>Admins</label>
+            <div id="adminsVal" class="stat-value">–</div>
+        </div>
+        <div class="stat-box">
+            <label>Vanliga användare</label>
+            <div id="regularVal" class="stat-value">–</div>
+        </div>
+        <div class="stat-box">
+            <label>Aktiva lån</label>
+            <div id="loansVal" class="stat-value">–</div>
+        </div>
+    </div>
+    <div style="margin-top:20px;text-align:center">
+        <a href="/Admin/Users" class="btn-primary" style="display:inline-block;width:auto;padding:10px 32px">Hantera användare</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+(async () => {
+    const res = await apiFetch('/api/admin/stats');
+    if (!res.ok) return;
+    const d = await res.json();
+    document.getElementById('totalVal').textContent   = d.total;
+    document.getElementById('adminsVal').textContent  = d.admins;
+    document.getElementById('regularVal').textContent = d.regular;
+    document.getElementById('loansVal').textContent   = d.loans;
+})();
+</script>
+}
