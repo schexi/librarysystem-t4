@@ -7,14 +7,13 @@ on:
   push:
     branches:
       - main
-      - deploy-items-api
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -40,8 +39,8 @@ jobs:
     runs-on: windows-latest
     needs: build
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
@@ -63,4 +62,3 @@ jobs:
           app-name: 'LibrarySystem-T4'
           slot-name: 'Production'
           package: .
-          
