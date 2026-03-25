@@ -56,6 +56,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'Items-API-'
+          app-name: 'Items-API'
           slot-name: 'Production'
           package: .
