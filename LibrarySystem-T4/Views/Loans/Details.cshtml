@@ -159,19 +159,6 @@
                 <span class="status-returned">Återlämnad @Model.ReturnedDate.Value.ToShortDateString()</span>
             }
         </div>
-
-        @if (!Model.ReturnedDate.HasValue)
-        {
-            <div class="btn-area">
-                <form method="post" asp-action="Return" asp-route-id="@Model.Id">
-                    <button type="submit" class="btn-return">Återlämna</button>
-                </form>
-                <form method="post" asp-action="Delete" asp-route-id="@Model.Id"
-                      onsubmit="return confirm('Är du säker på att du vill radera detta lån?')">
-                    <button type="submit" class="btn-delete">Radera lån</button>
-                </form>
-            </div>
-        }
     </div>
 
     <a asp-action="Index" class="btn-back">← Tillbaka till lånelistan</a>
