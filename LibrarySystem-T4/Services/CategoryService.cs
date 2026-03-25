@@ -24,15 +24,15 @@ public class CategoryService
     }
 
     // Skapar en ny kategori
-    public async Task CreateAsync(CategoryViewModel categoryViewModel)
+    public async Task CreateAsync(CategoryViewModel category)
     {
-        await _http.PostAsJsonAsync("api/categories", categoryViewModel);
+        await _http.PostAsJsonAsync("api/categories", category);
     }
 
     // Uppdaterar en kategori
-    public async Task UpdateAsync(int id, CategoryViewModel categoryViewModel)
+    public async Task UpdateAsync(CategoryViewModel category)
     {
-        await _http.PutAsJsonAsync($"api/categories/{id}", categoryViewModel);
+        await _http.PutAsJsonAsync($"api/categories/{category.Id}", category);
     }
 
     // Tar bort en kategori
