@@ -1,0 +1,32 @@
+﻿@model List<LibrarySystem_T4.Controllers.ItemViewModel>
+
+@{
+    ViewData["Title"] = "Items";
+}
+
+<link rel="stylesheet" href="~/css/items.css" asp-append-version="true"/>
+
+<div class="items-page">
+    <div class="items-grid">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="item-card">
+                    <div class="item-card-body">
+                        <h5 class="item-title">@item.Title</h5>
+                        <p class="item-category">@item.Category</p>
+                        <p class="item-description">@item.Description</p>
+                        <span class="item-status @(item.IsAvailable ? "available" : "unavailable")">
+                            @(item.IsAvailable ? "Tillgänglig" : "Utlånad")
+                        </span>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="no-items">Inga items hittades.</p>
+        }
+    </div>
+</div>
