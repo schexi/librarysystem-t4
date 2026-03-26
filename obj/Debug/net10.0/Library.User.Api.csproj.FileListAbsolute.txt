@@ -322,3 +322,9 @@
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Debug/net10.0/Library.User.Api.RazorAssemblyInfo.cs
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Debug/net10.0/compressed/v9npse5wpp-{0}-b7k7al5wc4-b7k7al5wc4.gz
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Debug/net10.0/compressed/awm7ubwqkf-{0}-8kntoag3ue-8kntoag3ue.gz
+/Users/adde/Documents/GitHub/librarysystem-t4/bin/Debug/net10.0/publish/web.config
+/Users/adde/Documents/GitHub/librarysystem-t4/bin/Debug/net10.0/publish/appsettings.Development.json
+/Users/adde/Documents/GitHub/librarysystem-t4/bin/Debug/net10.0/publish/appsettings.json
+/Users/adde/Documents/GitHub/librarysystem-t4/bin/Debug/net10.0/publish/Library.User.Api.deps.json
+/Users/adde/Documents/GitHub/librarysystem-t4/bin/Debug/net10.0/publish/Library.User.Api.runtimeconfig.json
+/Users/adde/Documents/GitHub/librarysystem-t4/bin/Debug/net10.0/publish/Library.User.Api.staticwebassets.endpoints.json
