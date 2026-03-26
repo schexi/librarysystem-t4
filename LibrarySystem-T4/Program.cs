@@ -15,6 +15,11 @@ builder.Services.AddHttpClient<CategoryService>(client =>
     client.BaseAddress = new Uri("http://localhost:5035/");
 });
 
+// Registrerar HttpClient som anropar Items API
+builder.Services.AddHttpClient<ItemService>(client =>
+{
+    client.BaseAddress = new Uri("https://items-api-adcac3a6hndtc0c5.norwayeast-01.azurewebsites.net/");
+});
 
 var app = builder.Build();
 
