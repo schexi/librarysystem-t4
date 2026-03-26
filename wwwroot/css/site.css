@@ -25,7 +25,7 @@
 
 html, body {
     font-family: 'Outfit', sans-serif;
-    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    background: url('/images/HV-bg.png') center center / cover no-repeat fixed;
     min-height: 100vh;
     color: #ffffff;
     transition: background 0.4s ease;

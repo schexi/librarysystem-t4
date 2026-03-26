@@ -53,7 +53,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -63,6 +62,10 @@ app.UseAuthentication();        // Kör autentisering
 app.UseAuthorization();         // Kör auktorisering
 
 // Default route
+app.MapGet("/", context => {
+    context.Response.Redirect("/Authorization/Login");
+    return Task.CompletedTask;
+});
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Authorization}/{action=Login}/{id?}");

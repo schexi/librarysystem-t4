@@ -8,7 +8,23 @@
 </head>
 <body>
 <nav class="navbar">
-    <a href="/" class="navbar-logo">📚 HV Bibliotek</a>
+    <a href="/" class="navbar-logo">
+        <span style="
+        background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    ">HV</span>
+        <span style="
+        color: rgba(255,255,255,0.9);
+        font-size: 1.4rem;
+        font-weight: 400;
+        margin-left: 4px;
+        letter-spacing: 1px;
+    ">Bibliotek</span>
+    </a>
     <ul class="navbar-links">
         @if (User.Identity?.IsAuthenticated == true)
         {
