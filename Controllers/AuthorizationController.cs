@@ -66,7 +66,7 @@ public class AuthorizationApiController(ApplicationDbContext context, IConfigura
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return Ok(new { message = "Utloggad" });
+        return Redirect("/Authorization/Login");
     }
 }
 

@@ -16,8 +16,8 @@ public class UserController(ApplicationDbContext context) : ControllerBase
     [HttpGet("me")]
     public async Task<IActionResult> GetMe()
     {
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var user = await context.Users.FindAsync(userId);
+        var userId      = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var user        = await context.Users.FindAsync(userId);
         var activeLoans = await context.Loans.CountAsync(l => l.UserId == userId && !l.IsReturned);
         return user == null ? NotFound() : Ok(new { user, activeLoans });
     }
@@ -89,12 +89,14 @@ public class UserController(ApplicationDbContext context) : ControllerBase
 
 [Route("User")]
 [Authorize]
-public class UserViewController : Controller
+public class UserPageController : Controller
 {
     [HttpGet("Profile")]
-    public IActionResult Profile() => View();
+    public IActionResult Profile() => View("~/Views/User/Profile.cshtml");
 
     [HttpGet("Update")]
-    public IActionResult Update() => View();
-    
+    public IActionResult Update() => View("~/Views/User/Update.cshtml");
+
+    [HttpGet("Loans")]
+    public IActionResult Loans() => View("~/Views/User/Loans.cshtml");
 }

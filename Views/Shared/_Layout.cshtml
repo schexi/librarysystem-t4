@@ -1,17 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="sv" data-theme="light">
 <head>
-    <meta charset="utf-8" />
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>HV Bibliotek – @ViewData["Title"]</title>
+    <link rel="stylesheet" href="/css/site.css"/>
 </head>
 <body>
-<div class="container">
-    @RenderBody()
-</div>
+<nav class="navbar">
+    <a href="/" class="navbar-logo">📚 HV Bibliotek</a>
+    <ul class="navbar-links">
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+        <li><a href="/User/Profile">Min profil</a></li>
+        <li><a href="/User/Update">Uppdatera</a></li>
+        <li><a href="/User/Loans">Lånhistorik</a></li>
+        <li><a href="/Books">Böcker</a></li>
+        @if (User.IsInRole("Admin"))
+        {
+        <li><a href="/Admin">Admin</a></li>
+        <li><a href="/Admin/Users">Användare</a></li>
+        }
+        }
+    </ul>
+    <div class="navbar-right">
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <span id="themeIcon">🌙</span>
+            <span id="themeText">Mörkt</span>
+        </button>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+        <svg viewBox="0 0 24 24" stroke-width="1.8">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        <a href="/api/auth/logout" class="btn-nav">Logga ut</a>
+        }
+        else
+        {
+        <a href="/Authorization/Login" class="btn-nav">Logga in</a>
+        }
+    </div>
+</nav>
 
-<script src="~/js/site.js"></script>
+@RenderBody()
 
-@RenderSection("Scripts", required: false) <!-- Viktigt -->
+<footer>© 2026 HV Bibliotek. All rights reserved.</footer>
+
+<script>
+    async function apiFetch(url, options = {}) {
+        return await fetch(url, {
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            ...options
+        });
+    }
+
+    function toggleTheme() {
+        const html    = document.documentElement;
+        const isDark  = html.getAttribute('data-theme') === 'dark';
+        html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        document.getElementById('themeIcon').textContent = isDark ? '🌙' : '☀️';
+        document.getElementById('themeText').textContent = isDark ? 'Mörkt' : 'Ljust';
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    }
+
+    (function() {
+        const saved = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', saved);
+        if (saved === 'dark') {
+            document.getElementById('themeIcon').textContent = '☀️';
+            document.getElementById('themeText').textContent = 'Ljust';
+        }
+    })();
+</script>
+@RenderSection("Scripts", required: false)
 </body>
 </html>

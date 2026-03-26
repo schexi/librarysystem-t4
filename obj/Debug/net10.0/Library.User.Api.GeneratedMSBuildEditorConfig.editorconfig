@@ -46,8 +46,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aG9yaXphdGlvbi9SZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/adde/Documents/GitHub/librarysystem-t4/Views/Books/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9va3MvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/adde/Documents/GitHub/librarysystem-t4/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/adde/Documents/GitHub/librarysystem-t4/Views/User/Loans.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlci9Mb2Fucy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/adde/Documents/GitHub/librarysystem-t4/Views/User/Profile.cshtml]
