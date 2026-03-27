@@ -1,4 +1,4 @@
-namespace Items_API.Models;
+﻿namespace LibrarySystem_T4.Models;
 
 public class Item
 {
@@ -7,5 +7,5 @@ public class Item
     public string Description { get; set; } = string.Empty;
     public string Category { get; set; } = string.Empty;
     public bool IsAvailable { get; set; } = true;
-    public DateTime AddedDate { get; set; }  = DateTime.UtcNow;
+    public DateTime AddedDate { get; set; } = DateTime.UtcNow;
 }
