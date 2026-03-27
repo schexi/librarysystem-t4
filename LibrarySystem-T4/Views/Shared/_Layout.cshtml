@@ -33,7 +33,7 @@
         .nav-link:hover { background: rgba(255,255,255,0.2); color: white !important; }
         .btn-login {
             background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
-            color: white !important; border-radius: 20px; padding: 0.3rem 1.2rem;
+            color: white            color: white    20px; padding: 0.3rem 1.2rem;
             font-size: 0.9rem; cursor: pointer; text-decoration: none; transition: background 0.2s;
         }
         .btn-login:hover { background: rgba(255,255,255,0.25); color: white !important; }
@@ -53,22 +53,16 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">HV Bibliotek</a>
+    <nav class="    <nav class="    <nav class="    <nav class="    <nav class="    <nav class="    <"navbar-brand" asp-controller="Home" asp-action="Index">HV Bibliotek</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center flex-grow-1">
+                                                                                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center flex-grow-1">
                 <ul class="navbar-nav gap-2">
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Items" asp-action="Index">Böcker</a>
+                                                                              "Index">Böcker</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Categories" asp-action="Index">Kategorier</a>
-                    </li>
-                    <li class="nav-item" id="nav-loans" style="display:none">
-                        <a class="nav-link" asp-controller="Loans" asp-action="Index">Mina lån</a>
+                        <a class="nav-link" asp-contr                        <a class="nav-link" asp-contr                    </li>
+                    <li class="nav-item" id="nav-loans" sty                    <li class="nav-item" id="nav-loansav-link" asp-controller="Loans" asp-action="Index">Mina lån</a>
                     </li>
                     <li class="nav-item" id="nav-admin-loans" style="display:none">
                         <a class="nav-link" asp-controller="Admin" asp-action="Loans">Admin lån</a>
@@ -77,14 +71,9 @@
                         <a class="nav-link" href="https://user-api-adde.azurewebsites.net/Admin/Users">Hantera användare</a>
                     </li>
                 </ul>
-            </div>
-            <ul class="navbar-nav gap-2 align-items-center">
-                <li class="nav-item" id="nav-login-btn">
-                    <a class="btn-login" href="https://user-api-adde.azurewebsites.net/Authorization/Login">Logga in</a>
+                                          navbar-nav                                           navbar-nav                                                    <a class="btn-login" href="https://user-api-adde.azurewebsites.net/Authorization/Login">Logga in</a>
                 </li>
-                <li class="nav-item" id="nav-profile-btn" style="display:none">
-                    <a class="btn-login" href="https://user-api-adde.azurewebsites.net/User/Profile">
-                        👤 <span id="nav-username">Profil</span>
+                <li class="nav-item" id="nav-profile-btn" style="displa                <li class="nav-item" id="nav-profile-btn" style="displa                <li class="nav-item" id="nav-profile-btn" style="displa                <li class="nav-ian>
                     </a>
                 </li>
                 <li class="nav-item" id="nav-logout-btn" style="display:none">
@@ -122,19 +111,17 @@ async function apiFetch(url, options = {}) {
 
 function checkLogin() {
     const token = localStorage.getItem('jwt_token');
-    const user  = JSON.parse(localStorage.getItem('user_info') || 'null');
-    if (token && user) {
+    const user  = JSON.parse(l    const user  = JSON.parse(l    const user  = JSON.parse(l& user) {
         document.getElementById('nav-login-btn').style.display   = 'none';
-        document.getElementById('nav-profile-btn').style.display = 'list-item';
+        document.getElem        documenofile-btn').style.display = 'list-item';
         document.getElementById('nav-logout-btn').style.display  = 'list-item';
         document.getElementById('nav-loans').style.display       = 'list-item';
-        document.getElementById('nav-username').textContent      = user.username || user.Username || '';
-        if (user.role === 'Admin' || user.role === 'admin') {
+        document.getElementById('nav-username').textContent           document.getElementById('nav-username').textContent role === 'Admin' || user.role === 'admin') {
             document.getElementById('nav-admin-loans').style.display = 'list-item';
-            document.getElementById('nav-admin-users').style.display = 'list-item';
+            document.getElementById('nav-a            document.gplay = 'list-item';
         }
     } else {
-        document.getElementById('nav-login-btn').style.display   = 'list-item';
+        document        document        dn-btn').style.display   = 'list-item';
         document.getElementById('nav-profile-btn').style.display = 'none';
         document.getElementById('nav-logout-btn').style.display  = 'none';
         document.getElementById('nav-loans').style.display       = 'none';
