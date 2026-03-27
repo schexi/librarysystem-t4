@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             background: linear-gradient(135deg, #0d3b6e 0%, #1b9aaa 50%, #06d6a0 100%);
             min-height: 100vh;
@@ -16,7 +15,6 @@
             display: flex;
             flex-direction: column;
         }
-
         nav {
             background: rgba(255,255,255,0.15) !important;
             backdrop-filter: blur(10px);
@@ -25,67 +23,31 @@
             margin: 16px;
             padding: 10px 24px !important;
         }
-
-        .navbar-brand {
-            color: white !important;
-            font-weight: 700;
-            font-size: 1.3rem;
-        }
-
+        .navbar-brand { color: white !important; font-weight: 700; font-size: 1.3rem; }
         .nav-link {
-            color: white !important;
-            font-weight: 600;
-            padding: 10px 20px !important;
-            border-radius: 8px;
-            font-size: 1rem !important;
-            border: 1px solid rgba(255,255,255,0.3);
+            color: white !important; font-weight: 600;
+            padding: 10px 20px !important; border-radius: 8px;
+            font-size: 1rem !important; border: 1px solid rgba(255,255,255,0.3);
             transition: background 0.2s;
         }
-
-        .nav-link:hover {
-            background: rgba(255,255,255,0.2);
-            color: white !important;
-        }
-
-        .navbar-toggler {
-            border-color: rgba(255,255,255,0.5);
-        }
-
-        .navbar-toggler-icon {
-            filter: invert(1);
-        }
-
+        .nav-link:hover { background: rgba(255,255,255,0.2); color: white !important; }
         .btn-login {
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white !important;
-            border-radius: 20px;
-            padding: 0.3rem 1rem;
-            font-size: 0.85rem;
-            cursor: pointer;
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            color: white !important; border-radius: 20px; padding: 0.3rem 1.2rem;
+            font-size: 0.9rem; cursor: pointer; text-decoration: none; transition: background 0.2s;
         }
-
-        .btn-login:hover {
-            background: rgba(255,255,255,0.25);
-            color: white !important;
+        .btn-login:hover { background: rgba(255,255,255,0.25); color: white !important; }
+        .btn-logout {
+            background: rgba(244,63,94,0.2); border: 1px solid rgba(244,63,94,0.4);
+            color: #fda4af !important; border-radius: 20px; padding: 0.3rem 1.2rem;
+            font-size: 0.9rem; cursor: pointer; text-decoration: none;
         }
-
-        main {
-            flex: 1;
-            padding: 0 16px;
-        }
-
+        .btn-logout:hover { background: rgba(244,63,94,0.35); }
+        main { flex: 1; padding: 0 16px; }
         footer {
-            background: rgba(0,0,0,0.2);
-            color: rgba(255,255,255,0.7);
-            text-align: center;
-            padding: 16px;
-            font-size: 0.85rem;
+            background: rgba(0,0,0,0.2); color: rgba(255,255,255,0.7);
+            text-align: center; padding: 16px; font-size: 0.85rem;
             border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        footer a {
-            color: rgba(255,255,255,0.7);
         }
     </style>
 </head>
@@ -100,41 +62,93 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center flex-grow-1">
                 <ul class="navbar-nav gap-2">
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Loans" asp-action="Index">Mina lån</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Admin" asp-action="Loans">Admin</a>
+                        <a class="nav-link" asp-controller="Items" asp-action="Index">Böcker</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Categories" asp-action="Index">Kategorier</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Items" asp-action="Index">Böcker</a>
+                    <li class="nav-item" id="nav-loans" style="display:none">
+                        <a class="nav-link" asp-controller="Loans" asp-action="Index">Mina lån</a>
+                    </li>
+                    <li class="nav-item" id="nav-admin-loans" style="display:none">
+                        <a class="nav-link" asp-controller="Admin" asp-action="Loans">Admin lån</a>
+                    </li>
+                    <li class="nav-item" id="nav-admin-users" style="display:none">
+                        <a class="nav-link" href="https://user-api-adde.azurewebsites.net/Admin/Users">Hantera användare</a>
                     </li>
                 </ul>
             </div>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="btn btn-login">Inloggad</a>
+            <ul class="navbar-nav gap-2 align-items-center">
+                <li class="nav-item" id="nav-login-btn">
+                    <a class="btn-login" href="https://user-api-adde.azurewebsites.net/Authorization/Login">Logga in</a>
+                </li>
+                <li class="nav-item" id="nav-profile-btn" style="display:none">
+                    <a class="btn-login" href="https://user-api-adde.azurewebsites.net/User/Profile">
+                        👤 <span id="nav-username">Profil</span>
+                    </a>
+                </li>
+                <li class="nav-item" id="nav-logout-btn" style="display:none">
+                    <a class="btn-logout" onclick="logout()">Logga ut</a>
                 </li>
             </ul>
         </div>
     </nav>
 </header>
-
 <main role="main">
     @RenderBody()
 </main>
-
 <footer>
     <div class="container">
         &copy; 2026 HV Bibliotek - Grupp T4. All rights reserved.
     </div>
 </footer>
-
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+const USER_API = "https://user-api-adde.azurewebsites.net";
+
+async function apiFetch(url, options = {}) {
+    const token = localStorage.getItem('jwt_token');
+    return await fetch(url, {
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+        },
+        ...options
+    });
+}
+
+function checkLogin() {
+    const token = localStorage.getItem('jwt_token');
+    const user  = JSON.parse(localStorage.getItem('user_info') || 'null');
+    if (token && user) {
+        document.getElementById('nav-login-btn').style.display   = 'none';
+        document.getElementById('nav-profile-btn').style.display = 'list-item';
+        document.getElementById('nav-logout-btn').style.display  = 'list-item';
+        document.getElementById('nav-loans').style.display       = 'list-item';
+        document.getElementById('nav-username').textContent      = user.username || user.Username || '';
+        if (user.role === 'Admin' || user.role === 'admin') {
+            document.getElementById('nav-admin-loans').style.display = 'list-item';
+            document.getElementById('nav-admin-users').style.display = 'list-item';
+        }
+    } else {
+        document.getElementById('nav-login-btn').style.display   = 'list-item';
+        document.getElementById('nav-profile-btn').style.display = 'none';
+        document.getElementById('nav-logout-btn').style.display  = 'none';
+        document.getElementById('nav-loans').style.display       = 'none';
+    }
+}
+
+function logout() {
+    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('user_info');
+    window.location.href = '/';
+}
+
+checkLogin();
+</script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
