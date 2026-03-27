@@ -7,11 +7,11 @@ public static class AdminSeeder
 {
     public static async Task SeedAsync(ApplicationDbContext db)
     {
-        if (!db.Users.Any(u => u.Role == "Admin"))
+        if (!db.Users.Any(u => u.Role == "admin"))
         {
             db.Users.Add(new UserEntity
             {
-                FirstName    = "Admin",
+                FirstName    = "admin",
                 LastName     = "HV",
                 Email        = "admin@hvbibliotek.se",
                 Username     = "admin",
