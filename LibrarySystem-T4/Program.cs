@@ -12,9 +12,13 @@ builder.Services.AddHttpClient<LoanService>();
 // Registrerar HttpClient som anropar Categories API
 builder.Services.AddHttpClient<CategoryService>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5034/");
-});
+    client.BaseAddress = new Uri("https://kategori-cbc6adfyhwafa3fd.norwayeast-01.azurewebsites.net/");});
 
+// Registrerar HttpClient som anropar Items API
+builder.Services.AddHttpClient<ItemService>(client =>
+{
+    client.BaseAddress = new Uri("https://items-api-adcac3a6hndtc0c5.norwayeast-01.azurewebsites.net/");
+});
 
 var app = builder.Build();
 
