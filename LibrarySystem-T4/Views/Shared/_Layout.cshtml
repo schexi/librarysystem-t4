@@ -63,6 +63,7 @@
             padding: 0.3rem 1rem;
             font-size: 0.85rem;
             cursor: pointer;
+            text-decoration: none;
         }
 
         .btn-login:hover {
@@ -113,9 +114,17 @@
                     </li>
                 </ul>
             </div>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="btn btn-login">Inloggad</a>
+            <ul class="navbar-nav gap-2 align-items-center">
+                <li class="nav-item" id="nav-login-btn">
+                    <a class="btn btn-login" href="https://user-api-adde.azurewebsites.net/Authorization/Login">Logga in</a>
+                </li>
+                <li class="nav-item" id="nav-profile-btn" style="display:none">
+                    <a class="btn btn-login" href="https://user-api-adde.azurewebsites.net/User/Profile">
+                        👤 <span id="nav-username">Profil</span>
+                    </a>
+                </li>
+                <li class="nav-item" id="nav-logout-btn" style="display:none">
+                    <a class="btn btn-login" onclick="logout()" style="cursor:pointer;color:#fda4af">Logga ut</a>
                 </li>
             </ul>
         </div>
@@ -135,6 +144,28 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+function checkLogin() {
+    var token = localStorage.getItem('jwt_token');
+    var user = JSON.parse(localStorage.getItem('user_info') || 'null');
+    if (token && user) {
+        document.getElementById('nav-login-btn').style.display = 'none';
+        document.getElementById('nav-profile-btn').style.display = 'list-item';
+        document.getElementById('nav-logout-btn').style.display = 'list-item';
+        document.getElementById('nav-username').textContent = user.username || user.Username || '';
+    } else {
+        document.getElementById('nav-login-btn').style.display = 'list-item';
+        document.getElementById('nav-profile-btn').style.display = 'none';
+        document.getElementById('nav-logout-btn').style.display = 'none';
+    }
+}
+function logout() {
+    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('user_info');
+    window.location.href = '/';
+}
+checkLogin();
+</script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
