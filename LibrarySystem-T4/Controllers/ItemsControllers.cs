@@ -7,6 +7,7 @@ public class ItemsController : Controller
 {
     private readonly HttpClient _httpClient;
     private const string ApiUrl = "https://items-api-adcac3a6hndtc0c5.norwayeast-01.azurewebsites.net/api/items";
+    private const string CategoryApiUrl = "https://kategori-cbc6adfyhwafa3fd.norwayeast-01.azurewebsites.net/api/categories";
 
     public ItemsController(IHttpClientFactory httpClientFactory)
     {
@@ -26,8 +27,10 @@ public class ItemsController : Controller
         }
     }
 
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
+        var categories = await _httpClient.GetFromJsonAsync<List<CategoryViewModel>>(CategoryApiUrl);
+        ViewBag.Categories = categories ?? new List<CategoryViewModel>();
         return View();
     }
 
@@ -42,6 +45,8 @@ public class ItemsController : Controller
     public async Task<IActionResult> Edit(int id)
     {
         var item = await _httpClient.GetFromJsonAsync<ItemViewModel>($"{ApiUrl}/{id}");
+        var categories = await _httpClient.GetFromJsonAsync<List<CategoryViewModel>>(CategoryApiUrl);
+        ViewBag.Categories = categories ?? new List<CategoryViewModel>();
         return View(item);
     }
 
@@ -67,4 +72,10 @@ public class ItemViewModel
     public string Category { get; set; } = string.Empty;
     public bool IsAvailable { get; set; }
     public DateTime AddedDate { get; set; } = DateTime.UtcNow;
+}
+
+public class CategoryViewModel
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
 }
