@@ -43,7 +43,6 @@ public class AuthorizationApiController(ApplicationDbContext context, IConfigura
     public async Task<IActionResult> Login([FromBody] LoginRequest login)
     {
         var user = await context.Users.FirstOrDefaultAsync(u => u.Username == login.Username);
-
         if (user == null || !BCrypt.Net.BCrypt.Verify(login.Password, user.PasswordHash))
             return Unauthorized("Fel användarnamn eller lösenord.");
 

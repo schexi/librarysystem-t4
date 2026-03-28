@@ -151,7 +151,6 @@
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/rjsmcshtml.dswa.cache.json
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/scopedcss/bundle/Library.User.Api.styles.css
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/compressed/awm7ubwqkf-{0}-8kntoag3ue-8kntoag3ue.gz
-/Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/compressed/v9npse5wpp-{0}-b7k7al5wc4-b7k7al5wc4.gz
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/staticwebassets.build.json
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/staticwebassets.build.json.cache
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/staticwebassets.development.json
@@ -163,3 +162,13 @@
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/Library.User.Api.pdb
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/Library.User.Api.genruntimeconfig.cache
 /Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/ref/Library.User.Api.dll
+/Users/adde/Documents/GitHub/librarysystem-t4/bin/Release/net10.0/publish/web.config
+/Users/adde/Documents/GitHub/librarysystem-t4/bin/Release/net10.0/publish/appsettings.Development.json
+/Users/adde/Documents/GitHub/librarysystem-t4/bin/Release/net10.0/publish/appsettings.json
+/Users/adde/Documents/GitHub/librarysystem-t4/bin/Release/net10.0/publish/Library.User.Api.deps.json
+/Users/adde/Documents/GitHub/librarysystem-t4/bin/Release/net10.0/publish/Library.User.Api.runtimeconfig.json
+/Users/adde/Documents/GitHub/librarysystem-t4/bin/Release/net10.0/publish/Library.User.Api.staticwebassets.endpoints.json
+/Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/compressed/kynjhz6khe-{0}-46ein0sx1k-46ein0sx1k.gz
+/Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/compressed/4botlpaxr4-{0}-493y06b0oq-493y06b0oq.gz
+/Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/compressed/tfhzacmf3m-{0}-o1o13a6vjx-o1o13a6vjx.gz
+/Users/adde/Documents/GitHub/librarysystem-t4/obj/Release/net10.0/compressed/v9npse5wpp-{0}-8dr9643bgn-8dr9643bgn.gz

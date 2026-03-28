@@ -8,9 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Lägg till MVC
 builder.Services.AddControllersWithViews();
 
-// Swagger (för API-dokumentation)
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
 
 // SQLite-databas
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -47,12 +45,6 @@ using (var scope = app.Services.CreateScope())
     await AdminSeeder.SeedAsync(db);
 }
 
-app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "HV Bibliotek API v1");
-    c.RoutePrefix = "swagger";
-});
 
 app.UseStaticFiles();
 
