@@ -18,32 +18,34 @@
         nav {
             background: rgba(255,255,255,0.15) !important;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,            borimportant;
-                                                                                                                                   nd { color: white !important; font-weight: 700; font-size: 1.3rem; text-decoration: none; }
+            border: 1px solid rgba(255,255,255,0.25) !important;
+            border-radius: 16px;
+            margin: 16px;
+            padding: 10px 24px !important;
+        }
+        .navbar-brand { color: white !important; font-weight: 700; font-size: 1.3rem; text-decoration: none; }
         .navbar-nav { list-style: none !important; padding-left: 0 !important; margin: 0 !important; }
         .nav-link {
             color: white !important;
             font-weight: 600;
-            padding: 8px 16px !important;
-            border-radius: 8px;
-            font-size: 0.95re         ant;
+            padding: 8px 1            padding: 8px 1            padding: 8px 1            paize: 0.95rem !important;
             border: 1px solid rgba(255,255,255,0.3);
-            transition: background 0.2s;
-            text-decoration: none;
-            display: block;
-        }
+            transitio            transitio            transitio            transitio            transitio       }
         .nav-link:hover { background: rgba(255,255,255,0.2); color: white !important; }
         .navbar-toggler { border-color: rgba(255,255,255,0.5); }
-        .        .        .        .        .        .        . -nav {
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
+        .navbar-toggler-icon { filter: invert(1); }
+        .btn-nav {
+            background: rgba(255,255,2            background: rgba(255,255,2            background:;
             color: white !important;
             border-radius: 20px;
             padding: 6px 18px;
             font-size: 0.85rem;
             cursor: pointer;
             text-decoration: none;
-            display: inline-            display: inline-            display: inline-            display: inline-            dia(255,255,255,0.28); color: white !important; }
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .btn-nav:hover { background: rgba(255,255,255,0.28); color: white !important; }
         .btn-nav-logout { color: #fda4af !important; border-color: rgba(253,164,175,0.4); }
         main { flex: 1; padding: 0 16px; }
         footer {
@@ -54,36 +56,41 @@
             font-size: 0.85rem;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
-        footer a { color: rgba(255,255,255,0.7); }
-    </style>
-</head>
+        footer a { colo        footer a { colo        footer a { chead>
 <body>
 <header>
     <nav class="navbar navbar-expand-md">
-        <div class="container        <div class="container        <div c" href="/">HV Bibliotek</a>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">HV Bibliotek</a>
             <button class="navbar-toggler" type="button"
                     data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></    >
             </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
+            <      ass="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav gap-2 flex-grow-1 justify-content-center" id="nav-main" style="display:none!important">
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Items" asp-action="Index">Böcker</a>
+                        <a class="nav-link" asp-controller="Items" asp-action="Index">Bocker</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Categories" asp-action="Index">Kategorier</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-control                        <a class="nav-link" asp-control                        <a cla      <li class="nav-item">
+                        <a class="nav-link" asp-controller="Loans" asp-action="Index">Mina lan</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="https://user-api-adde.azurewebsites.net/User/Profile">Min profil</a>
-                                                                                            <a class="nav-link" href="https://user-api-adde.azurewebsites.net/User/Update">Uppdatera profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://user-api-adde.azurewebsites.net/User/Update">Uppdatera profil</a>
                     </li>
                     <li class="nav-item" id="nav-admin-loans" style="display:none">
-                        <a class="nav-link" asp-controller="Admin" asp-action="Loans">Admin lån</a>
+                        <a class="nav-link" asp-controller="Admin" asp-action="Loans">Admin lan</a>
                     </li>
-                    <li class="nav-item" id="nav-admin-users" style="display:none">
-                        <a class="nav-link" href="https://user-api-adde.azurewebsites.net/Admin/Users">Hantera användare</a>
+                    <li class="nav-item" id="nav-admin-create" style="display:none">
+                                             sp-controller="Items" asp-action="Create">Ny bok</a>
+                    </li>
+                    <li class="nav-item" id="nav-admin-user                    <li class="nav-i             <a class="nav-link" href="https://user-api-adde.azurewebsites.net/Admin/Users">Hantera anvandare</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav gap-2 align-items-center ms-auto">
@@ -92,18 +99,26 @@
                     </li>
                     <li class="nav-item" id="nav-profile-btn" style="display:none">
                         <a class="btn-nav" href="https://user-api-adde.azurewebsites.net/User/Profile">
-                            👤 <span id="nav-username"></span>
+                            <span id="nav-username"></span>
                         </a>
                     </li>
-                    <li class="nav-item" id="nav-logout-btn" style="display:none">
-                        <a class="btn-nav btn-nav-logout" onclick="logout()" style="cursor:pointer">Logga ut</a>
+                    <li class="nav-item" id="nav-logout-b                    <li class="nav-item" id="nav-logout-b                    <li class="nav="logout()" style="cursor:pointer">Logga ut</a>
                     </li>
                 </ul>
-            </d            </d            </d            </d            </d            </d            </d            </d            </d>
+            </div>
+        </div>
+    </nav>
+</header>
+<main role="main">
+    @RenderBody()
+</main>
+<footer>
+    <div class="container">
         &copy; 2026 HV Bibliotek - Grupp T4. All rights reserved.
     </div>
 </footer>
-<script src="~/lib/jquery/dist/jquery.<script src="~/lib/jquery/dist/jquery.<scrtrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
