@@ -5,12 +5,21 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Registrerar tjänster
+
 builder.Services.AddControllers();
 builder.Services.AddOpenApi(); // OpenAPI/Scalar för API-dokumentation
 builder.Services.AddDbContext<LoansContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))); // Hämtar connection string från appsettings.json
-builder.Services.AddScoped<ApiKeyFilter>(); // Registrerar API-nyckelfilter
+builder.Services.AddScoped<ApiKeyFilter>(); 
+
+// CORS implementering för externa anrop
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 
 var app = builder.Build();
 
@@ -24,9 +33,10 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference(); // Scalar UI tillgänglig på /scalar/v1
+    app.MapScalarApiReference();
 }
 
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
