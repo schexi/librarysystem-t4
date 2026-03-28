@@ -1,5 +1,3 @@
-
-
 using Microsoft.AspNetCore.Mvc;
 using LibrarySystem_T4.Services;
 using LibrarySystem_T4.Models;
@@ -27,7 +25,7 @@ public class CategoriesController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CategoryViewModel category)
+    public async Task<IActionResult> Create(Category category)
     {
         await _service.CreateAsync(category);
         return RedirectToAction(nameof(Index));
@@ -41,22 +39,14 @@ public class CategoriesController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(CategoryViewModel category)
+    public async Task<IActionResult> Edit(int id, Category category)
     {
-        await _service.UpdateAsync(category);
+        await _service.UpdateAsync(id, category);
         return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
-    {
-        var category = await _service.GetByIdAsync(id);
-        if (category == null) return NotFound();
-        return View(category);
-    }
-
-    [HttpPost, ActionName("Delete")]
-    public async Task<IActionResult> DeleteConfirmed(int id)
     {
         await _service.DeleteAsync(id);
         return RedirectToAction(nameof(Index));
