@@ -74,8 +74,3 @@ public class ItemViewModel
     public DateTime AddedDate { get; set; } = DateTime.UtcNow;
 }
 
-public class CategoryViewModel
-{
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-}
