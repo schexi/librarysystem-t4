@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             background: linear-gradient(135deg, #0d3b6e 0%, #1b9aaa 50%, #06d6a0 100%);
             min-height: 100vh;
@@ -15,6 +16,7 @@
             display: flex;
             flex-direction: column;
         }
+
         nav {
             background: rgba(255,255,255,0.15) !important;
             backdrop-filter: blur(10px);
@@ -23,7 +25,13 @@
             margin: 16px;
             padding: 10px 24px !important;
         }
-        .navbar-brand { color: white !important; font-weight: 700; font-size: 1.3rem; }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
         .nav-link {
             color: white !important;
             font-weight: 600;
@@ -33,9 +41,20 @@
             border: 1px solid rgba(255,255,255,0.3);
             transition: background 0.2s;
         }
-        .nav-link:hover { background: rgba(255,255,255,0.2); color: white !important; }
-        .navbar-toggler { border-color: rgba(255,255,255,0.5); }
-        .navbar-toggler-icon { filter: invert(1); }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.2);
+            color: white !important;
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1);
+        }
+
         .btn-login {
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.3);
@@ -46,8 +65,17 @@
             cursor: pointer;
             text-decoration: none;
         }
-        .btn-login:hover { background: rgba(255,255,255,0.25); color: white !important; }
-        main { flex: 1; padding: 0 16px; }
+
+        .btn-login:hover {
+            background: rgba(255,255,255,0.25);
+            color: white !important;
+        }
+
+        main {
+            flex: 1;
+            padding: 0 16px;
+        }
+
         footer {
             background: rgba(0,0,0,0.2);
             color: rgba(255,255,255,0.7);
@@ -56,7 +84,10 @@
             font-size: 0.85rem;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
-        footer a { color: rgba(255,255,255,0.7); }
+
+        footer a {
+            color: rgba(255,255,255,0.7);
+        }
     </style>
 </head>
 <body>
@@ -99,38 +130,41 @@
         </div>
     </nav>
 </header>
+
 <main role="main">
     @RenderBody()
 </main>
+
 <footer>
     <div class="container">
         &copy; 2026 HV Bibliotek - Grupp T4. All rights reserved.
     </div>
 </footer>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script>
-    function checkLogin() {
-        var token = localStorage.getItem('jwt_token');
-        var user = JSON.parse(localStorage.getItem('user_info') || 'null');
-        if (token && user) {
-            document.getElementById('nav-login-btn').style.display = 'none';
-            document.getElementById('nav-profile-btn').style.display = 'list-item';
-            document.getElementById('nav-logout-btn').style.display = 'list-item';
-            document.getElementById('nav-username').textContent = user.username || user.Username || '';
-        } else {
-            document.getElementById('nav-login-btn').style.display = 'list-item';
-            document.getElementById('nav-profile-btn').style.display = 'none';
-            document.getElementById('nav-logout-btn').style.display = 'none';
-        }
+function checkLogin() {
+    var token = localStorage.getItem('jwt_token');
+    var user = JSON.parse(localStorage.getItem('user_info') || 'null');
+    if (token && user) {
+        document.getElementById('nav-login-btn').style.display = 'none';
+        document.getElementById('nav-profile-btn').style.display = 'list-item';
+        document.getElementById('nav-logout-btn').style.display = 'list-item';
+        document.getElementById('nav-username').textContent = user.username || user.Username || '';
+    } else {
+        document.getElementById('nav-login-btn').style.display = 'list-item';
+        document.getElementById('nav-profile-btn').style.display = 'none';
+        document.getElementById('nav-logout-btn').style.display = 'none';
     }
-    function logout() {
-        localStorage.removeItem('jwt_token');
-        localStorage.removeItem('user_info');
-        window.location.href = '/';
-    }
-    checkLogin();
+}
+function logout() {
+    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('user_info');
+    window.location.href = '/';
+}
+checkLogin();
 </script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
