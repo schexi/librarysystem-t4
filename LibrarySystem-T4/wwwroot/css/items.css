@@ -181,3 +181,8 @@
 .btn-create:hover {
     background: rgba(0,200,100,0.6);
 }
+
+.form-input option {
+    background: #1a7a9a;
+    color: white;
+}
