@@ -29,8 +29,8 @@ public class ItemsController : Controller
 
     public async Task<IActionResult> Create()
     {
-        var categories = await _httpClient.GetFromJsonAsync<List<CategoryViewModel>>(CategoryApiUrl);
-        ViewBag.Categories = categories ?? new List<CategoryViewModel>();
+        var categories = await _httpClient.GetFromJsonAsync<List<LibrarySystem_T4.Models.CategoryViewModel>>(CategoryApiUrl);
+        ViewBag.Categories = categories ?? new List<LibrarySystem_T4.Models.CategoryViewModel>();
         return View();
     }
 
@@ -45,8 +45,8 @@ public class ItemsController : Controller
     public async Task<IActionResult> Edit(int id)
     {
         var item = await _httpClient.GetFromJsonAsync<ItemViewModel>($"{ApiUrl}/{id}");
-        var categories = await _httpClient.GetFromJsonAsync<List<CategoryViewModel>>(CategoryApiUrl);
-        ViewBag.Categories = categories ?? new List<CategoryViewModel>();
+        var categories = await _httpClient.GetFromJsonAsync<List<LibrarySystem_T4.Models.CategoryViewModel>>(CategoryApiUrl);
+        ViewBag.Categories = categories ?? new List<LibrarySystem_T4.Models.CategoryViewModel>();
         return View(item);
     }
 
@@ -72,10 +72,4 @@ public class ItemViewModel
     public string Category { get; set; } = string.Empty;
     public bool IsAvailable { get; set; }
     public DateTime AddedDate { get; set; } = DateTime.UtcNow;
-}
-
-public class CategoryViewModel
-{
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
 }
