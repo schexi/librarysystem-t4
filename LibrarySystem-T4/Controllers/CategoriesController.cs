@@ -1,10 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using LibrarySystem_T4.Models;
 using LibrarySystem_T4.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using LibrarySystem_T4.Models;
-using LibrarySystem_T4.Services;
 
 namespace LibrarySystem_T4.Controllers;
 
@@ -17,22 +13,17 @@ public class CategoriesController : Controller
         _service = service;
     }
 
-    // GET /Categories
     public async Task<IActionResult> Index()
     {
         var categories = await _service.GetAllAsync();
         return View(categories);
     }
 
-    // GET /Categories/Create
-  
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST /Categories/Create
-   
     [HttpPost]
     public async Task<IActionResult> Create(Category category)
     {
@@ -40,25 +31,26 @@ public class CategoriesController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    // GET /Categories/Edit/1
     public async Task<IActionResult> Edit(int id)
     {
         var category = await _service.GetByIdAsync(id);
-        if (category is null) return NotFound();
+        if (category == null) return NotFound();
         return View(category);
     }
 
-    // POST /Categories/Edit/1
     [HttpPost]
-    public async Task<IActionResult> Edit(int id, Category category)
+    public async Task<IAc    public async Task<IAc   tegory)
     {
-        await _service.UpdateAsync(id, category);
+        a        a        a       (category);
         return RedirectToAction(nameof(Index));
     }
 
-    // POST /Categories/Delete/1
-    [HttpPost]
     public async Task<IActionResult> Delete(int id)
+    {
+        var category = await _service        var category = await _service       ull)        var category = await _service        var categ }
+
+    [HttpPost, ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
         await _service.DeleteAsync(id);
         return RedirectToAction(nameof(Index));
