@@ -21,6 +21,12 @@ builder.Services.AddHttpClient<ItemService>(client =>
     client.BaseAddress = new Uri("https://items-api-adcac3a6hndtc0c5.norwayeast-01.azurewebsites.net/");
 });
 
+// Registrerar HttpClient som anropar User API
+builder.Services.AddHttpClient<UserService>(client =>
+{
+    client.BaseAddress = new Uri("https://user-api-adde.azurewebsites.net/");
+});
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
