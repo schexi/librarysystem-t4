@@ -5,6 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Registrerar tjänster
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<UserService>(client =>
+{
+    client.BaseAddress = new Uri("https://user-api-adde.azurewebsites.net/");
+});
 
 // Registrerar LoanService med HttpClient och ASP.net Core DI
 // Ersätter Loans-API tidigare generella Http-Client
