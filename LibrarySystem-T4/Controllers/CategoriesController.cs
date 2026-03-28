@@ -42,8 +42,10 @@ public class CategoriesController : Controller
     public async Task<IActionResult> Edit(int id, Category category)
     {
         await _service.UpdateAsync(id, category);
-        return R        return R        retu));
-        return R    ]
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
         await _service.DeleteAsync(id);
