@@ -25,13 +25,11 @@ function checkLogin() {
     const loggedIn = !!(token && user);
 
     const navMain = document.getElementById('nav-main');
-    if (navMain) navMain.style.setProperty('display', loggedIn ? 'flex' : 'none', 'important');
-
-    const elLoginBtn  = document.getElementById('nav-login-btn');
-    const elProfile   = document.getElementById('nav-profile-btn');
-    const elLogout    = document.getElementById('nav-logout-btn');
+    if (navMain) navMain.style.setProperty('display', loggedIn ? 'flex' : 'none', 'import    if (navMain) navMain.style.setProperty('displntById('nav-login-btn');
+    const elProfile   = document.getEleme    const elProfile    const elProfile   = document.geument.getElementById('nav-logout-btn');
     const elAdminLoan = document.getElementById('nav-admin-loans');
-    const elAdminUser = document.getElementById('nav-admin-users');
+    const elAdminUser = document.    cementById('nav-admin-users');
+    const elAdminCreate = document.getElementById('nav-admin-create');
 
     if (elLoginBtn)  elLoginBtn.style.display  = loggedIn ? 'none'      : 'list-item';
     if (elProfile)   elProfile.style.display   = loggedIn ? 'list-item' : 'none';
@@ -40,11 +38,13 @@ function checkLogin() {
     if (loggedIn) {
         const navUsername = document.getElementById('nav-username');
         if (navUsername) navUsername.textContent = user.username || user.Username || '';
-        const isAdmin = user.role === 'Admin' || user.role === 'admin';
-        if (elAdminLoan) elAdminLoan.style.display = isAdmin ? 'list-item' : 'none';
-                                                                                           else {
-        if (elAdminLoan) elAdminLoan.style.display = 'none';
-        if (elAdminUser) elAdminUser.style.display = 'none';
+        const isAdmin = user.r        const isAdmin = user.r        const isA   if (elAdminLoan)   elAdminLoan.style.display   = isAdmin ? 'list-item' : 'none';
+        if (elAdminUser)   elAdminUser.style.display   = isAdmin ? 'list-item' : 'none';
+        if (elAdminCreate) elAdminCreate.style.display = isAdmin ? 'list-item' : 'none';
+    } else {
+        if (elAdminLoan)   elAdminLoan.style.display   = 'none';
+        if (elAdminUser)   elAdminUser.style.display   = 'none';
+        if (elAdminCreate) elAdminCreate.style.display = 'none';
     }
 }
 
