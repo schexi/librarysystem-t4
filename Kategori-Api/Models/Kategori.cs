@@ -1,6 +1,6 @@
-namespace LibrarySystem_T4.Models;
+namespace Kategori_Api.Models;
 
-public class Category
+public class Kategori
 {
     public int Id { get; set; }
     public string Name { get; set; } = "";
