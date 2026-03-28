@@ -46,8 +46,9 @@ public class CategoriesController : Controller
     }
 
     [HttpPost]
-    public as    public as    public as   e(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-                                                return RedirectToAction(nameof(Index));
+        await _service.DeleteAsync(id);
+        return RedirectToAction(nameof(Index));
     }
 }
