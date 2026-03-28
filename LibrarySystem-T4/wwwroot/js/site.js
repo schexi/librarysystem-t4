@@ -7,6 +7,15 @@ if (tokenFromUrl && userFromUrl) {
     localStorage.setItem('user_info', decodeURIComponent(userFromUrl));
     window.history.replaceState({}, '', window.location.pathname);
 }
+
+const urlParams = new URLSearchParams(window.location.search);
+const tokenFromUrl = urlParams.get('token');
+const userFromUrl = urlParams.get('user');
+if (tokenFromUrl && userFromUrl) {
+    localStorage.setItem('jwt_token', decodeURIComponent(tokenFromUrl));
+    localStorage.setItem('user_info', decodeURIComponent(userFromUrl));
+    window.history.replaceState({}, '', window.location.pathname);
+}
 async function apiFetch(url, options = {}) {
     const token = localStorage.getItem('jwt_token');
     return await fetch(url, {
