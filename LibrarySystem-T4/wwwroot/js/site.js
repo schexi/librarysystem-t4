@@ -28,19 +28,22 @@ function checkLogin() {
     if (navMain) navMain.style.setProperty('display', loggedIn ? 'flex' : 'none', 'important');
 
     const elLoginBtn  = document.getElementById('nav-login-btn');
-    const elProfile   = document.getElementById('nav-profile    const elProfile   = document.getElementBylementById('nav-logout-btn');
-    const elAdminLoan = document.getElementById('nav-admin-loans');
-    const e    const e    coment.getElementById('nav-admin-users');
+    const elProfile   = document.getElementById('nav-profile-btn');
+    const elLogout    = document.getElementById('nav-logout-btn');
+    const elAdminLoan     const elAdminLoan     const elAdminLoan     coconst elAdminUser = document.getElementById('nav-admin-users');
 
-    i    i    i    i    i inBtn.style.display  = loggedIn ? 'none'      : 'list-item';
+    if (elLoginBtn)  elLoginBtn.style.display  = loggedIn ? 'none'      : 'list-item';
     if (elProfile)   elProfile.style.display   = loggedIn ? 'list-item' : 'none';
     if (elLogout)    elLogout.style.display     = loggedIn ? 'list-item' : 'none';
 
     if (loggedIn) {
         const navUsername = document.getElementById('nav-username');
-        if (nav        if (nav        if (nav        if (nav      | use        if (nav        if (nav        if (nav        if (nav      | use   ole         if (nav        if (nav nLoan) elAdminLoan.style.display = isAdmin ? 'list-item' : 'none';
+        if (navUsername) navUsername.textContent = user.username || user.Username || '';
+        const isAdmin = user.role === 'Admin' || user.role === 'admin';
+        if (elAdminLoan) elAdminLoan.style.display = isAdmin ? 'list-item' : 'none';
         if (elAdminUser) elAdminUser.style.display = isAdmin ? 'list-item' : 'none';
-    } else {    } else {    } else {    } else {    } else {    } else { 
+    } else {
+        if (elAdminLoan) elAdminLoan.style.display = 'none';
         if (elAdminUser) elAdminUser.style.display = 'none';
     }
 }
