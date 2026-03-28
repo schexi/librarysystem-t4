@@ -1,10 +1,11 @@
 @{
     ViewData["Title"] = "Min profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container mt-4" style="max-width:500px;">
     <div style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); border-radius:16px; padding:2rem; backdrop-filter:blur(8px);">
-        <h2 style="color:white; font-weight:700;">👤 Min profil</h2>
+        <h2 style="color:white; font-weight:700;">Min profil</h2>
         <div id="profile-info" style="color:white; margin-top:1rem;"></div>
         <a href="https://user-api-adde.azurewebsites.net/User/Profile" class="btn mt-3" style="background:rgba(255,255,255,0.2); color:white; border:1px solid rgba(255,255,255,0.3); border-radius:8px;">Uppdatera profil</a>
     </div>
@@ -14,10 +15,9 @@
 <script>
     const user = JSON.parse(localStorage.getItem("user_info") || "null");
     if (user) {
-        document.getElementById("profile-info").innerHTML = `
-            <p><strong>Namn:</strong> ${user.username || user.Username}</p>
-            <p><strong>Email:</strong> ${user.email || user.Email}</p>
-        `;
+        document.getElementById("profile-info").innerHTML =
+            "<p><strong>Namn:</strong> " + (user.username || user.Username || "") + "</p>" +
+            "<p><strong>Email:</strong> " + (user.email || user.Email || "") + "</p>";
     } else {
         window.location.href = "https://user-api-adde.azurewebsites.net/Authorization/Login";
     }
