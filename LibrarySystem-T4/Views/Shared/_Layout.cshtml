@@ -18,40 +18,43 @@
         nav {
             background: rgba(255,255,255,0.15) !important;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,            borimportant;
-                                                                                                                                   nd { color: white !important; font-weight: 700; font-size: 1.3rem; text-decoration: none; }
-        .navbar-nav { list-style: none !important; padding-left: 0 !important; margin: 0 !important; }
+            border: 1px solid rgba(255,255,255,0.25) !important;
+            border-radius: 16px;
+            margin: 16px;
+            padding: 10px 24px !important;
+        }
+        .navbar-brand { color: white !important; font-weight: 700; font-size: 1.3rem; text-        .navbar-brand               .navbar-brand { color: white !important; font-weight: 70rtant; margin: 0 !important; }
         .nav-link {
             color: white !important;
             font-weight: 600;
             padding: 8px 16px !important;
             border-radius: 8px;
-            font-size: 0.95re         ant;
+            font-size: 0.95rem !important;
             border: 1px solid rgba(255,255,255,0.3);
             transition: background 0.2s;
             text-decoration: none;
             display: block;
         }
         .nav-link:hover { background: rgba(255,255,255,0.2); color: white !important; }
-        .navbar-toggler { border-color: rgba(255,255,255,0.5); }
+        .navba        .navba        .navba     5,255,255,0.5); }
         .        .        .        .        .        .        . -nav {
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,2            background: rgba(255,255,2            backgrou.3);
             color: white !important;
-            border-radius: 20px;
-            padding: 6px 18px;
+            border-radiu            border-radiu            bor
             font-size: 0.85rem;
             cursor: pointer;
             text-decoration: none;
-            display: inline-            display: inline-            display: inline-            display: inline-            dia(255,255,255,0.28); color: white !important; }
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .btn-nav:hover { background: rgba(255  55,255,0.28); colo        .btn-nav:hov }
         .btn-nav-logout { color: #fda4af !important; border-color: rgba(253,164,175,0.4); }
         main { flex: 1; padding: 0 16px; }
         footer {
             background: rgba(0,0,0,0.2);
             color: rgba(255,255,255,0.7);
             text-align: center;
-            padding: 16px;
-            font-size: 0.85rem;
+            padding: 16                font-size: 0       
             border-top: 1px solid rgba(255,255,255,0.1);
         }
         footer a { color: rgba(255,255,255,0.7); }
@@ -60,7 +63,8 @@
 <body>
 <header>
     <nav class="navbar navbar-expand-md">
-        <div class="container        <div class="container        <div c" href="/">HV Bibliotek</a>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">HV Bibliotek</a>
             <button class="navbar-toggler" type="button"
                     data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false">
@@ -69,20 +73,21 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav gap-2 flex-grow-1 justify-content-center" id="nav-main" style="display:none!important">
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Items" asp-action="Index">Böcker</a>
+                                                              ems                                                     </li>
+                    <li class="nav-item">
+                        <a class                        <a class                  ="Index">Kategorier</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Categories" asp-action="Index">Kategorier</a>
+                        <a class="nav-link" asp-controller="Loans" asp-action="Index">Mina lån</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-control                        <a class="nav-link" asp-control                        <a cla      <li class="nav-item">
                         <a class="nav-link" href="https://user-api-adde.azurewebsites.net/User/Profile">Min profil</a>
-                                                                                            <a class="nav-link" href="https://user-api-adde.azurewebsites.net/User/Update">Uppdatera profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://user-api-adde.azurewebsites.net/User/Update">Uppdatera profil</a>
                     </li>
                     <li class="nav-item" id="nav-admin-loans" style="display:none">
-                        <a class="nav-link" asp-controller="Admin" asp-action="Loans">Admin lån</a>
-                    </li>
-                    <li class="nav-item" id="nav-admin-users" style="display:none">
+                        <a class="nav-link" asp-controller="Admin" asp-action="Loans">Admin lå                        <a class="nav-link" asp-controller="Admin" asp-action="Loans">Admin lå                 e">
                         <a class="nav-link" href="https://user-api-adde.azurewebsites.net/Admin/Users">Hantera användare</a>
                     </li>
                 </ul>
@@ -99,11 +104,20 @@
                         <a class="btn-nav btn-nav-logout" onclick="logout()" style="cursor:pointer">Logga ut</a>
                     </li>
                 </ul>
-            </d            </d            </d            </d            </d            </d            </d            </d            </d>
+            </div>
+        </div>
+    </nav>
+</header>
+<main role="main">
+    @RenderBody()
+</main>
+<footer>
+    <div class="container">
         &copy; 2026 HV Bibliotek - Grupp T4. All rights reserved.
     </div>
 </footer>
-<script src="~/lib/jquery/dist/jquery.<script src="~/lib/jquery/dist/jquery.<scrtrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
