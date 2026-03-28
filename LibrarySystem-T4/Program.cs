@@ -21,6 +21,12 @@ builder.Services.AddHttpClient<ItemService>(client =>
     client.BaseAddress = new Uri("https://items-api-adcac3a6hndtc0c5.norwayeast-01.azurewebsites.net/");
 });
 
+// Registrerar HttpClient som anropar User API
+builder.Services.AddHttpClient<UserService>(client =>
+{
+    client.BaseAddress = new Uri("https://user-api-adde.azurewebsites.net/");
+});
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -34,9 +40,9 @@ app.UseRouting();
 app.UseAuthorization();
 app.MapStaticAssets();
 
-app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+builder.Services.AddHttpClient<CategoryService>(client =>
+{
+    client.BaseAddress = new Uri("https://kategori-cbc6adfyhwafa3fd.norwayeast-01.azurewebsites.net/");
+});
 
 app.Run();
