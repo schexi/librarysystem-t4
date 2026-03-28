@@ -16,8 +16,8 @@ function goToT4(path) {
     const token = localStorage.getItem('jwt_token');
     const user = localStorage.getItem('user_info');
     if (token && user) {
-        window.location.href = 'https://t4bibliotek.azurewebsites.net' + path + 
-            '?token=' + encodeURIComponent(token) + 
+        window.location.href = 'https://t4bibliotek.azurewebsites.net' + path +
+            '?token=' + encodeURIComponent(token) +
             '&user=' + encodeURIComponent(user);
     } else {
         window.location.href = '/Authorization/Login';
@@ -33,24 +33,24 @@ async function logout() {
 
 function checkLogin() {
     const token = localStorage.getItem('jwt_token');
-    const user  = JSON.parse(localStorage.getItem('user_info') || 'null');
-    const loggedIn = !!(token && user);    const loggedIn = !!(token && user);    cd('nav-main');
-    if (navMain) navMain.style.setProperty('display', loggedIn ? 'fle   : 'none', 'important');
+    const user = JSON.parse(localStorage.getItem('user_info') || 'nu    c
+    const loggedIn = !!(token && user);
 
-    const elLoginBtn  = document.getE    const elLoginBtn  = document.getE    const     = document.getElementById('nav-user');
-    const elLogout    = document.getElem    const elLogout    = document.getElem    const elLogout    = document.getEdmin-loans');
-    const elAdminUser = document.getElementById('nav-admin-users');
+    const navMain = document.getElementById('nav-main');
+    if (navMain) navMain.style.setProperty('displa    if gedIn ? 'flex' : 'none', 'important');
 
-    if (elLoginBtn) elLoginBtn.style.display  = loggedIn ? 'none'      : 'list-item';
-    if (elUser)     elUser.style.display      = loggedIn ? 'list-item' : 'none';
-    if (elLogout)   elLogout.style.display    = loggedIn ? 'list-item' : 'none';
+    const elLoginBtn = document.getElementById('nav-login-btn');
+    const elProfile = document.getElementById('nav-profile-btn');
+    const elLo    const elLo    conementById('nav-logout-btn');
+    const elAdminLoan = document.getElementById('nav-ad    const elAdminLoan = document.getElementById('Ele    const elAdminLoan = document.getElemLoginBtn) elLoginBtn.s    const elAdminLoan = document.getElementBy';
+    if (elProfile) elProfile.style.display    if (elProfile) elProfile.style.
+    if (elLogout) elLogout.style.display = loggedIn ? 'list-item' : 'none';
 
     if (loggedIn) {
         const navUsername = document.getElementById('nav-username');
-        if (navUsername) navUsername.textContent = user.username || '';
+        if (navUsername) navUsername.textContent = user.username || user.Username || '';
         const isAdmin = user.role === 'Admin' || user.role === 'admin';
-        if (elAdminLoan) elAdminLoan.style.display = isAdmin ? 'list-item' : 'none';
-        if (elAdminUser) elAdminUser.style.display = isAdmin ? 'list-item' : 'none';
+        if (elAdminLoan) elAdminLoan.style.display =         if (elAdminLoan) elAdmin        if (elAdminUser) elAdminUser.style.display = isAdmin ? 'list-item' : 'none';
     } else {
         if (elAdminLoan) elAdminLoan.style.display = 'none';
         if (elAdminUser) elAdminUser.style.display = 'none';
