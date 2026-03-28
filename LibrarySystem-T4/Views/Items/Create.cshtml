@@ -1,0 +1,40 @@
+﻿@model LibrarySystem_T4.Controllers.ItemViewModel
+
+@{
+    ViewData["Title"] = "Skapa objekt";
+}
+
+<link rel="stylesheet" href="~/css/items.css" asp-append-version="true"/>
+
+<div class="items-page">
+    <div class="page-header">
+        <h2>Skapa nytt objekt</h2>
+        <a asp-action="Index" class="btn-back">← Tillbaka</a>
+    </div>
+
+    <form asp-action="Create" method="post" class="item-form">
+        <div class="form-group">
+            <label>Titel</label>
+            <input asp-for="Title" class="form-input" placeholder="Ange titel"/>
+        </div>
+        <div class="form-group">
+            <label>Beskrivning</label>
+            <input asp-for="Description" class="form-input" placeholder="Ange beskrivning"/>
+        </div>
+        <div class="form-group">
+            <label>Kategori</label>
+            <select asp-for="Category" class="form-input">
+                <option value="">Välj kategori</option>
+                @foreach (var cat in ViewBag.Categories)
+                {
+                    <option value="@cat.Name">@cat.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Tillgänglig</label>
+            <input asp-for="IsAvailable" type="checkbox" class="form-checkbox"/>
+        </div>
+        <button type="submit" class="btn-create">Skapa</button>
+    </form>
+</div>
