@@ -166,57 +166,6 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 
-<script>
-    const USER_API = "https://user-api-adde.azurewebsites.net";
-
-    async function apiFetch(url, options = {}) {
-        const token = localStorage.getItem('jwt_token');
-        return await fetch(url, {
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-                ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-            },
-            ...options
-        });
-    }
-
-    function checkLogin() {
-        const token = localStorage.getItem('jwt_token');
-        const user  = JSON.parse(localStorage.getItem('user_info') || 'null');
-
-        if (token && user) {
-            // Visa inloggad-läge
-            document.getElementById('nav-login-btn').style.display   = 'none';
-            document.getElementById('nav-profile-btn').style.display = 'list-item';
-            document.getElementById('nav-logout-btn').style.display  = 'list-item';
-            document.getElementById('nav-loans').style.display       = 'list-item';
-            document.getElementById('nav-username').textContent      = user.username || user.Username || '';
-
-            // Visa admin-meny om admin
-            if (user.role === 'Admin' || user.role === 'admin') {
-                document.getElementById('nav-admin-loans').style.display = 'list-item';
-                document.getElementById('nav-admin-users').style.display = 'list-item';
-            }
-        } else {
-            // Visa ej inloggad-läge
-            document.getElementById('nav-login-btn').style.display   = 'list-item';
-            document.getElementById('nav-profile-btn').style.display = 'none';
-            document.getElementById('nav-logout-btn').style.display  = 'none';
-            document.getElementById('nav-loans').style.display       = 'none';
-        }
-    }
-
-    function logout() {
-        localStorage.removeItem('jwt_token');
-        localStorage.removeItem('user_info');
-        window.location.href = '/';
-    }
-
-    // Kör vid sidladdning
-    checkLogin();
-</script>
-
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
