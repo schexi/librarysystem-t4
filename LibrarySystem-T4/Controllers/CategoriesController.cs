@@ -47,6 +47,7 @@ public class CategoriesController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
         var category = await _service.GetByIdAsync(id);
@@ -61,4 +62,3 @@ public class CategoriesController : Controller
         return RedirectToAction(nameof(Index));
     }
 }
-
