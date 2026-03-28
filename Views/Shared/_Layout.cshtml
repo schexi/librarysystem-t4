@@ -116,15 +116,15 @@
                         <a class="nav-link" href="#" onclick="goToT4('/Items')">Böcker</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Categories" asp-action="Index">Kategorier</a>
+                        <a class="nav-link" href="#" onclick="goToT4('/Categories')">Kategorier</a>
                     </li>
                     <!-- Endast för inloggade -->
                     <li class="nav-item" id="nav-loans" style="display:none">
-                        <a class="nav-link" asp-controller="Loans" asp-action="Index">Mina lån</a>
+                        <a class="nav-link" href="#" onclick="goToT4('/Loans')">Mina lån</a>
                     </li>
                     <!-- Endast för admin -->
                     <li class="nav-item" id="nav-admin-loans" style="display:none">
-                        <a class="nav-link" asp-controller="Admin" asp-action="Loans">Admin lån</a>
+                        <a class="nav-link" href="#" onclick="goToT4('/Admin/Loans')">Admin lån</a>
                     </li>
                     <li class="nav-item" id="nav-admin-users" style="display:none">
                         <a class="nav-link" href="https://user-api-adde.azurewebsites.net/Admin/Users" target="_blank">Hantera användare</a>
