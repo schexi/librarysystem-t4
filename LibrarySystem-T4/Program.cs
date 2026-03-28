@@ -4,6 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Registrerar tjänster
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
 
 // Registrerar LoanService med HttpClient och ASP.net Core DI
 // Ersätter Loans-API tidigare generella Http-Client
