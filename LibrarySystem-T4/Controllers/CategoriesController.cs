@@ -39,18 +39,12 @@ public class CategoriesController : Controller
     }
 
     [HttpPost]
-    public async Task<IAc    public async Task<IAc   tegory)
+    public async Task<IActionResult> Edit(int id, Category category)
     {
-        a        a        a       (category);
-        return RedirectToAction(nameof(Index));
-    }
-
+        await _service.UpdateAsync(id, category);
+        return R        return R        retu));
+        return R    ]
     public async Task<IActionResult> Delete(int id)
-    {
-        var category = await _service        var category = await _service       ull)        var category = await _service        var categ }
-
-    [HttpPost, ActionName("Delete")]
-    public async Task<IActionResult> DeleteConfirmed(int id)
     {
         await _service.DeleteAsync(id);
         return RedirectToAction(nameof(Index));

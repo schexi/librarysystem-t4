@@ -1,0 +1,15 @@
+@model LibrarySystem_T4.Models.Category
+
+<div class="container mt-4" style="max-width:500px;">
+    <div style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); border-radius:16px; padding:2rem; backdrop-filter:blur(8px);">
+        <h2 style="color:white; font-weight:700; margin-bottom:1rem;">Ta bort kategori</h2>
+        <p style="color:rgba(255,255,255,0.8);">Är du säker på att du vill ta bort <strong>@Model.Name</strong>?</p>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn" style="background:rgba(244,63,94,0.3); color:white; border:1px solid rgba(244,63,94,0.4); border-radius:8px;">Ta bort</button>
+                <a asp-action="Index" class="btn" style="background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.2); border-radius:8px;">Avbryt</a>
+            </div>
+        </form>
+    </div>
+</div>
