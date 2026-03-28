@@ -60,4 +60,6 @@ public class AdminController : Controller
         await _loanService.DeleteAsync(id);
         return RedirectToAction("Loans");
     }
+    
+    
 }
