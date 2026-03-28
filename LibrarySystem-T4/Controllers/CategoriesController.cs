@@ -25,7 +25,7 @@ public class CategoriesController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Category category)
+    public async Task<IActionResult> Create(CategoryViewModel category)
     {
         await _service.CreateAsync(category);
         return RedirectToAction(nameof(Index));
@@ -39,9 +39,9 @@ public class CategoriesController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(int id, Category category)
+    public async Task<IActionResult> Edit(CategoryViewModel category)
     {
-        await _service.UpdateAsync(id, category);
+        await _service.UpdateAsync(category);
         return RedirectToAction(nameof(Index));
     }
 
