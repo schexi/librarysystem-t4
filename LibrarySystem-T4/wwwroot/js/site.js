@@ -30,7 +30,8 @@ function checkLogin() {
     const elLoginBtn  = document.getElementById('nav-login-btn');
     const elProfile   = document.getElementById('nav-profile-btn');
     const elLogout    = document.getElementById('nav-logout-btn');
-    const elAdminLoan     const elAdminLoan     const elAdminLoan     coconst elAdminUser = document.getElementById('nav-admin-users');
+    const elAdminLoan = document.getElementById('nav-admin-loans');
+    const elAdminUser = document.getElementById('nav-admin-users');
 
     if (elLoginBtn)  elLoginBtn.style.display  = loggedIn ? 'none'      : 'list-item';
     if (elProfile)   elProfile.style.display   = loggedIn ? 'list-item' : 'none';
@@ -41,8 +42,7 @@ function checkLogin() {
         if (navUsername) navUsername.textContent = user.username || user.Username || '';
         const isAdmin = user.role === 'Admin' || user.role === 'admin';
         if (elAdminLoan) elAdminLoan.style.display = isAdmin ? 'list-item' : 'none';
-        if (elAdminUser) elAdminUser.style.display = isAdmin ? 'list-item' : 'none';
-    } else {
+                                                                                           else {
         if (elAdminLoan) elAdminLoan.style.display = 'none';
         if (elAdminUser) elAdminUser.style.display = 'none';
     }
