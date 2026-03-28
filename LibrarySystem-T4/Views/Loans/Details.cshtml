@@ -1,0 +1,165 @@
+@model LibrarySystem_T4.Models.LoanViewModel
+
+@{
+    ViewData["Title"] = "Låndetaljer";
+}
+
+<style>
+    .details-container {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    h1 {
+        color: white;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 24px;
+    }
+
+    .details-card {
+        background: rgba(255,255,255,0.85);
+        border: 1px solid rgba(255,255,255,0.95);
+        border-radius: 14px;
+        padding: 32px;
+    }
+
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(13,59,110,0.1);
+    }
+
+    .detail-row:last-of-type {
+        border-bottom: none;
+    }
+
+    .detail-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #1b9aaa;
+        font-weight: 600;
+    }
+
+    .detail-value {
+        font-size: 14px;
+        color: #0d3b6e;
+        font-weight: 500;
+    }
+
+    .status-active {
+        background: rgba(255,200,0,0.15);
+        color: #856404;
+        border: 1px solid rgba(255,200,0,0.4);
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .status-returned {
+        background: rgba(6,214,160,0.15);
+        color: #0a6640;
+        border: 1px solid rgba(6,214,160,0.4);
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .btn-area {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .btn-return {
+        background: #06d6a0;
+        border: none;
+        color: #04342c;
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-return:hover {
+        background: #04b386;
+    }
+
+    .btn-delete {
+        background: rgba(220,53,69,0.1);
+        border: 1px solid rgba(220,53,69,0.3);
+        color: #dc3545;
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-delete:hover {
+        background: rgba(220,53,69,0.2);
+    }
+
+    .btn-back {
+        display: inline-block;
+        margin-top: 20px;
+        color: rgba(255,255,255,0.7);
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+    .btn-back:hover {
+        color: white;
+    }
+</style>
+
+<div class="details-container">
+    <h1>Låndetaljer</h1>
+
+    <div class="details-card">
+        <div class="detail-row">
+            <span class="detail-label">Lån-ID</span>
+            <span class="detail-value">#@Model.Id</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Objekt-ID</span>
+            <span class="detail-value">#@Model.ItemId</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Låntagare</span>
+            <span class="detail-value">@Model.BorrowerName</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">E-post</span>
+            <span class="detail-value">@Model.BorrowerEmail</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Utlånad</span>
+            <span class="detail-value">@Model.BorrowedDate.ToShortDateString()</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Förfaller</span>
+            <span class="detail-value">@Model.DueDate.ToShortDateString()</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Status</span>
+            @if (!Model.ReturnedDate.HasValue)
+            {
+                <span class="status-active">Aktiv</span>
+            }
+            else
+            {
+                <span class="status-returned">Återlämnad @Model.ReturnedDate.Value.ToShortDateString()</span>
+            }
+        </div>
+    </div>
+
+    <a asp-action="Index" class="btn-back">← Tillbaka till lånelistan</a>
+</div>

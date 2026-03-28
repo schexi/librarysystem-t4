@@ -1,0 +1,39 @@
+﻿@model List<LibrarySystem_T4.Controllers.ItemViewModel>
+
+@{
+    ViewData["Title"] = "Items";
+}
+
+<link rel="stylesheet" href="~/css/items.css" asp-append-version="true"/>
+
+<div class="items-page">
+    <div class="page-header">
+        <h2>Böcker</h2>
+        <a asp-action="Create" class="btn-new">+ Nytt objekt</a>
+    </div>
+
+    <div class="items-grid">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="item-card">
+                    <h5 class="item-title">@item.Title</h5>
+                    <p class="item-category">@item.Category</p>
+                    <p class="item-description">@item.Description</p>
+                    <div class="item-actions">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-edit">Redigera</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-delete">Ta bort</a>
+                        <span class="item-status @(item.IsAvailable ? "available" : "unavailable")">
+                            @(item.IsAvailable ? "Tillgänglig" : "Utlånad")
+                        </span>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="no-items">Inga items hittades.</p>
+        }
+    </div>
+</div>

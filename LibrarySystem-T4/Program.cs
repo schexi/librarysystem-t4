@@ -1,29 +1,42 @@
+using LibrarySystem_T4.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Registrerar tjänster
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
+
+// Registrerar LoanService med HttpClient och ASP.net Core DI
+// Ersätter Loans-API tidigare generella Http-Client
+builder.Services.AddHttpClient<LoanService>();
+
+// Registrerar HttpClient som anropar Categories API
+builder.Services.AddHttpClient<CategoryService>(client =>
+{
+    client.BaseAddress = new Uri("https://kategori-cbc6adfyhwafa3fd.norwayeast-01.azurewebsites.net/");});
+
+// Registrerar HttpClient som anropar Items API
+builder.Services.AddHttpClient<ItemService>(client =>
+{
+    client.BaseAddress = new Uri("https://items-api-adcac3a6hndtc0c5.norwayeast-01.azurewebsites.net/");
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapStaticAssets();
 
 app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();
