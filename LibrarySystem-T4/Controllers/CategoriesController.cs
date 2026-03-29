@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using LibrarySystem_T4.Services;
 using LibrarySystem_T4.Models;
 
@@ -19,18 +20,23 @@ public class CategoriesController : Controller
         return View(categories);
     }
 
+    [HttpGet]
+    [Authorize(Roles = "Admin")]
     public IActionResult Create()
     {
         return View();
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(CategoryViewModel category)
     {
         await _service.CreateAsync(category);
         return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(int id)
     {
         var category = await _service.GetByIdAsync(id);
@@ -39,6 +45,7 @@ public class CategoriesController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(CategoryViewModel category)
     {
         await _service.UpdateAsync(category);
@@ -46,6 +53,7 @@ public class CategoriesController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)
     {
         await _service.DeleteAsync(id);

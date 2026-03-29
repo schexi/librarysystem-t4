@@ -1,51 +1,61 @@
 async function apiFetch(url, options = {}) {
     const token = localStorage.getItem('jwt_token');
-    return await fetch(url, {
-        credentials: 'include',
+    return fetch(url, {
+        ...options,
         headers: {
             'Content-Type': 'application/json',
-            ...(token && token !== 'cookie-auth'
-                ? { 'Authorization': 'Bearer ' + token }
-                : {})
-        },
-        ...options
+            ...(token ? { 'Authorization': 'Bearer ' + token } : {}),
+            ...(options.headers || {})
+        }
     });
 }
 
-async function logout() {
+function logout() {
     localStorage.removeItem('jwt_token');
     localStorage.removeItem('user_info');
-    try { await fetch('https://user-api-adde.azurewebsites.net/api/auth/logout', { credentials: 'include' }); } catch (_) {}
-    window.location.href = 'https://user-api-adde.azurewebsites.net/Authorization/Login';
+    window.location.href = '/Authorization/Login';
 }
 
 function checkLogin() {
-    const token    = localStorage.getItem('jwt_token');
-    const user     = JSON.parse(localStorage.getItem('user_info') || 'null');
-    const loggedIn = !!(token && user);
+    const token = localStorage.getItem('jwt_token');
+    const user  = JSON.parse(localStorage.getItem('user_info') || 'null');
 
-    const navMain = document.getElementById('nav-main');
-    if (navMain) navMain.style.setProperty('display', loggedIn ? 'flex' : 'none', 'import    if (navMain) navMain.style.setProperty('displntById('nav-login-btn');
-    const elProfile   = document.getEleme    const elProfile    const elProfile   = document.geument.getElementById('nav-logout-btn');
-    const elAdminLoan = document.getElementById('nav-admin-loans');
-    const elAdminUser = document.    cementById('nav-admin-users');
-    const elAdminCreate = document.getElementById('nav-admin-create');
+    const loginBtn    = document.getElementById('nav-login-btn');
+    const profileBtn  = document.getElementById('nav-profile-btn');
+    const logoutBtn   = document.getElementById('nav-logout-btn');
+    const navBooks    = document.getElementById('nav-books');
+    const navCats     = document.getElementById('nav-categories');
+    const navLoans    = document.getElementById('nav-loans');
+    const navAdmin    = document.getElementById('nav-admin-loans');
+    const navUsers    = document.getElementById('nav-admin-users');
+    const navAdminMain= document.getElementById('nav-admin-main');
+    const usernameEl  = document.getElementById('nav-username');
 
-    if (elLoginBtn)  elLoginBtn.style.display  = loggedIn ? 'none'      : 'list-item';
-    if (elProfile)   elProfile.style.display   = loggedIn ? 'list-item' : 'none';
-    if (elLogout)    elLogout.style.display     = loggedIn ? 'list-item' : 'none';
+    if (token && user) {
+        if (loginBtn)     loginBtn.style.display    = 'none';
+        if (profileBtn)   profileBtn.style.display   = 'list-item';
+        if (logoutBtn)    logoutBtn.style.display    = 'list-item';
+        if (navBooks)     navBooks.style.display     = 'list-item';
+        if (navCats)      navCats.style.display      = 'list-item';
+        if (navLoans)     navLoans.style.display     = 'list-item';
+        if (usernameEl)   usernameEl.textContent     = user.username || '';
 
-    if (loggedIn) {
-        const navUsername = document.getElementById('nav-username');
-        if (navUsername) navUsername.textContent = user.username || user.Username || '';
-        const isAdmin = user.r        const isAdmin = user.r        const isA   if (elAdminLoan)   elAdminLoan.style.display   = isAdmin ? 'list-item' : 'none';
-        if (elAdminUser)   elAdminUser.style.display   = isAdmin ? 'list-item' : 'none';
-        if (elAdminCreate) elAdminCreate.style.display = isAdmin ? 'list-item' : 'none';
+        if (user.role === 'Admin') {
+            if (navAdmin)     navAdmin.style.display     = 'list-item';
+            if (navUsers)     navUsers.style.display     = 'list-item';
+            if (navAdminMain) navAdminMain.style.display = 'list-item';
+        }
     } else {
-        if (elAdminLoan)   elAdminLoan.style.display   = 'none';
-        if (elAdminUser)   elAdminUser.style.display   = 'none';
-        if (elAdminCreate) elAdminCreate.style.display = 'none';
+        if (loginBtn)     loginBtn.style.display    = 'list-item';
+        if (profileBtn)   profileBtn.style.display   = 'none';
+        if (logoutBtn)    logoutBtn.style.display    = 'none';
+        if (navBooks)     navBooks.style.display     = 'none';
+        if (navCats)      navCats.style.display      = 'none';
+        if (navLoans)     navLoans.style.display     = 'none';
+        if (navAdmin)     navAdmin.style.display     = 'none';
+        if (navUsers)     navUsers.style.display     = 'none';
+        if (navAdminMain) navAdminMain.style.display = 'none';
     }
 }
 
-document.addEventListener('DOMContentLoaded', checkLogin);
+checkLogin();

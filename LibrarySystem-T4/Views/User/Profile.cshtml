@@ -1,0 +1,84 @@
+@{
+    ViewData["Title"] = "Min profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="page-title">👤 Min profil</h1>
+
+<div id="loadingMsg" style="color:rgba(255,255,255,0.7);padding:20px">Laddar profil...</div>
+
+<div id="profileContent" style="display:none">
+    <div class="glass-card" style="max-width:600px;margin-bottom:20px">
+        <div class="stats-grid" style="margin-bottom:20px">
+            <div class="stat-box">
+                <label>Användarnamn</label>
+                <div id="usernameVal" class="stat-value" style="font-size:1.2rem">–</div>
+            </div>
+            <div class="stat-box">
+                <label>E-post</label>
+                <div id="emailVal" class="stat-value" style="font-size:.95rem">–</div>
+            </div>
+            <div class="stat-box">
+                <label>Aktiva lån</label>
+                <div id="loansVal" class="stat-value">–</div>
+            </div>
+            <div class="stat-box">
+                <label>Roll</label>
+                <div id="roleVal" class="stat-value" style="font-size:1.2rem">–</div>
+            </div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <a href="/User/Update"
+               style="background:#06d6a0;color:#04342c;padding:10px 24px;border-radius:10px;font-weight:700;text-decoration:none">
+                ✏️ Uppdatera profil
+            </a>
+            <a href="/User/Loans"
+               style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;padding:10px 24px;border-radius:10px;font-weight:700;text-decoration:none">
+                📖 Mina lån
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+(async () => {
+    const token = localStorage.getItem('jwt_token');
+    const userInfo = JSON.parse(localStorage.getItem('user_info') || 'null');
+
+    if (!token || !userInfo) {
+        window.location.href = '/Authorization/Login';
+        return;
+    }
+
+    try {
+        const res = await apiFetch('/api/user/me');
+
+        if (res.status === 401) {
+            localStorage.removeItem('jwt_token');
+            localStorage.removeItem('user_info');
+            window.location.href = '/Authorization/Login';
+            return;
+        }
+
+        if (!res.ok) {
+            document.getElementById('loadingMsg').textContent = 'Kunde inte hämta profildata.';
+            return;
+        }
+
+        const { user, activeLoans } = await res.json();
+
+        document.getElementById('usernameVal').textContent = user.username;
+        document.getElementById('emailVal').textContent    = user.email;
+        document.getElementById('loansVal').textContent    = activeLoans;
+        document.getElementById('roleVal').textContent     = user.role;
+
+        document.getElementById('loadingMsg').style.display    = 'none';
+        document.getElementById('profileContent').style.display = 'block';
+
+    } catch (e) {
+        document.getElementById('loadingMsg').textContent = 'Fel vid laddning av profil.';
+    }
+})();
+</script>
+}

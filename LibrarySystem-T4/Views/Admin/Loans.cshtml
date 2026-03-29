@@ -1,313 +1,153 @@
-@model List<LibrarySystem_T4.Models.LoanViewModel>
-
 @{
-    ViewData["Title"] = "Adminvy - Alla lån";
+ViewData["Title"] = "Admin — Alla lån";
+Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .admin-container {
-        max-width: 1200px;
-        margin: 40px auto;
-        padding: 0 20px;
-    }
+<h1 class="page-title">📚 Alla lån</h1>
 
-    .admin-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 24px;
-    }
-
-    h1 { color: white; font-size: 2rem; font-weight: 700; }
-
-    .btn-new {
-        background: #06d6a0;
-        color: #04342c;
-        padding: 10px 24px;
-        border-radius: 8px;
-        font-weight: 600;
-        border: none;
-        font-size: 14px;
-        cursor: pointer;
-    }
-
-    .btn-new:hover { background: #04b386; }
-
-    .tabs {
-        display: flex;
-        gap: 8px;
-        margin-bottom: 24px;
-    }
-
-    .tab {
-        padding: 10px 24px;
-        border-radius: 8px;
-        font-size: 14px;
-        font-weight: 600;
-        border: 1px solid rgba(255,255,255,0.25);
-        color: white;
-        background: rgba(255,255,255,0.08);
-        text-decoration: none;
-        transition: background 0.2s;
-    }
-
-    .tab.active { background: white; color: #0f4c75; border-color: white; }
-    .tab:hover:not(.active) { background: rgba(255,255,255,0.18); color: white; }
-
-    .empty-message {
-        background: rgba(255,255,255,0.08);
-        border: 1px solid rgba(255,255,255,0.18);
-        border-radius: 14px;
-        padding: 40px;
-        text-align: center;
-        color: white;
-    }
-
-    .loan-card {
-        background: rgba(255,255,255,0.85);
-        border: 1px solid rgba(255,255,255,0.95);
-        border-radius: 14px;
-        padding: 18px 20px;
-        margin-bottom: 14px;
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch;
-        gap: 16px;
-    }
-
-    .card-left {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-width: 200px;
-    }
-
-    .card-right {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: flex-end;
-        gap: 12px;
-        margin-right: 16px;
-    }
-
-    .loan-id { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #1b9aaa; }
-    .loan-item { font-size: 15px; font-weight: 600; color: #0d3b6e; }
-    .loan-name { font-size: 12px; color: #0d3b6e; opacity: 0.8; }
-    .loan-email { font-size: 12px; color: #1b9aaa; }
-
-    .dates { display: flex; flex-direction: row; gap: 24px; align-items: flex-start; }
-    .date-block { display: flex; flex-direction: column; align-items: center; }
-    .date-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #0d3b6e; opacity: 0.6; }
-    .date-val { font-size: 13px; font-weight: 500; color: #0d3b6e; }
-
-    .btn-area { display: flex; gap: 8px; }
-
-    .btn-return {
-        background: #06d6a0;
-        border: none;
-        color: #04342c;
-        padding: 8px 16px;
-        border-radius: 8px;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    .btn-delete {
-        background: rgba(220,53,69,0.1);
-        border: 1px solid rgba(220,53,69,0.3);
-        color: #dc3545;
-        padding: 8px 16px;
-        border-radius: 8px;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-</style>
-
-<div class="admin-container">
-    <div class="admin-header">
-        <h1>Adminvy — Alla lån</h1>
-        <button class="btn-new" data-bs-toggle="modal" data-bs-target="#createModal">
-            + Skapa nytt lån
-        </button>
-    </div>
-
-    @{
-        var aktiva = Model.Where(l => !l.ReturnedDate.HasValue).ToList();
-        var tidigare = Model.Where(l => l.ReturnedDate.HasValue).ToList();
-        var visaAktiva = Context.Request.Query["tab"] != "tidigare";
-        var visaLån = visaAktiva ? aktiva : tidigare;
-    }
-
-    <div class="tabs">
-        <a href="?tab=aktiva" class="tab @(visaAktiva ? "active" : "")">
-            Aktiva lån (@aktiva.Count)
-        </a>
-        <a href="?tab=tidigare" class="tab @(!visaAktiva ? "active" : "")">
-            Tidigare lån (@tidigare.Count)
-        </a>
-    </div>
-
-    @if (!visaLån.Any())
-    {
-        <div class="empty-message">
-            @(visaAktiva ? "Inga aktiva lån." : "Inga tidigare lån.")
+<div class="glass-card" style="max-width:1100px">
+    <div class="stats-grid" style="margin-bottom:24px">
+        <div class="stat-box">
+            <label>📖 Totalt aktiva lån</label>
+            <div id="activeCount" class="stat-value">–</div>
         </div>
-    }
-    else
-    {
-        @foreach (var loan in visaLån)
-        {
-            <div class="loan-card">
-                <div class="card-left">
-                    <span class="loan-id">Lån #@loan.Id</span>
-                    <span class="loan-item">Objekt #@loan.ItemId</span>
-                    <div style="margin-top: 18px;">
-                        <span class="loan-name">@loan.BorrowerName</span><br/>
-                        <span class="loan-email">@loan.BorrowerEmail</span>
-                    </div>
-                </div>
-
-                <div class="card-right">
-                    <div class="dates">
-                        <div class="date-block">
-                            <span class="date-label">Utlånad</span>
-                            <span class="date-val">@loan.BorrowedDate.ToShortDateString()</span>
-                        </div>
-                        <div class="date-block">
-                            <span class="date-label">Förfaller</span>
-                            <span class="date-val">@loan.DueDate.ToShortDateString()</span>
-                        </div>
-                        @if (loan.ReturnedDate.HasValue)
-                        {
-                            <div class="date-block">
-                                <span class="date-label">Återlämnad</span>
-                                <span class="date-val">@loan.ReturnedDate.Value.ToShortDateString()</span>
-                            </div>
-                        }
-                    </div>
-                    <div class="btn-area">
-                        @if (!loan.ReturnedDate.HasValue)
-                        {
-                            <button class="btn-return"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#returnModal"
-                                    data-id="@loan.Id"
-                                    data-name="@loan.BorrowerName">
-                                Återlämna
-                            </button>
-                        }
-                        <button class="btn-delete"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteModal"
-                                data-id="@loan.Id"
-                                data-name="@loan.BorrowerName">
-                            Radera
-                        </button>
-                    </div>
-                </div>
-            </div>
-        }
-    }
-</div>
-
-@* Modal för att skapa lån *@
-<div class="modal fade" id="createModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Skapa nytt lån</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <form method="post" asp-controller="Admin" asp-action="Create">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Objekt-ID</label>
-                        <input type="number" name="ItemId" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Namn</label>
-                        <input type="text" name="BorrowerName" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">E-post</label>
-                        <input type="email" name="BorrowerEmail" class="form-control" required />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Förfallodatum</label>
-                        <input type="date" name="DueDate" class="form-control"
-                               value="@DateTime.Now.AddDays(28).ToString("yyyy-MM-dd")" required />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avbryt</button>
-                    <button type="submit" class="btn btn-success">Skapa lån</button>
-                </div>
-            </form>
+        <div class="stat-box">
+            <label>✅ Returnerade</label>
+            <div id="returnedCount" class="stat-value">–</div>
+        </div>
+        <div class="stat-box">
+            <label>⚠️ Försenade</label>
+            <div id="overdueCount" class="stat-value">–</div>
         </div>
     </div>
-</div>
 
-@* Modal för att återlämna lån *@
-<div class="modal fade" id="returnModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Återlämna lån</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p>Bekräfta återlämning för <strong id="returnName"></strong>?</p>
-            </div>
-            <form method="post" asp-controller="Admin" asp-action="Return">
-                <input type="hidden" name="id" id="returnId" />
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avbryt</button>
-                    <button type="submit" class="btn btn-success">Bekräfta</button>
-                </div>
-            </form>
-        </div>
+    <div class="tabs" style="margin-bottom:20px">
+        <button class="tab-btn active" onclick="showTab('active')">Aktiva lån</button>
+        <button class="tab-btn" onclick="showTab('returned')">Returnerade</button>
+        <button class="tab-btn" onclick="showTab('overdue')">⚠️ Försenade</button>
     </div>
-</div>
 
-@* Modal för att ta bort lån *@
-<div class="modal fade" id="deleteModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Radera lån</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p>Är du säker på att du vill radera lånet för <strong id="deleteName"></strong>?</p>
-            </div>
-            <form method="post" asp-controller="Admin" asp-action="Delete">
-                <input type="hidden" name="id" id="deleteId" />
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avbryt</button>
-                    <button type="submit" class="btn btn-danger">Radera</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <div id="activeTab"><p style="opacity:.7;padding:20px">Laddar...</p></div>
+    <div id="returnedTab" style="display:none"><p style="opacity:.7;padding:20px">Laddar...</p></div>
+    <div id="overdueTab" style="display:none"><p style="opacity:.7;padding:20px">Laddar...</p></div>
 </div>
 
 @section Scripts {
-    <script>
-        // Fyller i rätt ID och namn i återlämna-modalen
-        document.getElementById('returnModal').addEventListener('show.bs.modal', function (e) {
-            var btn = e.relatedTarget;
-            document.getElementById('returnId').value = btn.getAttribute('data-id');
-            document.getElementById('returnName').textContent = btn.getAttribute('data-name');
-        });
+<script>
+    const _token = localStorage.getItem('jwt_token');
+    const _user  = JSON.parse(localStorage.getItem('user_info') || 'null');
+    if (!_token || !_user || _user.role !== 'Admin') {
+        window.location.href = '/Authorization/Login';
+    }
 
-        // Fyller i rätt ID och namn i radera-modalen
-        document.getElementById('deleteModal').addEventListener('show.bs.modal', function (e) {
-            var btn = e.relatedTarget;
-            document.getElementById('deleteId').value = btn.getAttribute('data-id');
-            document.getElementById('deleteName').textContent = btn.getAttribute('data-name');
+    let allLoans = [];
+
+    (async () => {
+        const res = await apiFetch('/api/loans/all');
+        if (!res.ok) { document.getElementById('activeTab').innerHTML = '<p style="opacity:.7;padding:20px">Kunde inte hämta lån.</p>'; return; }
+        allLoans = await res.json();
+
+        const active   = allLoans.filter(l => !l.isReturned);
+        const returned = allLoans.filter(l => l.isReturned);
+        const overdue  = allLoans.filter(l => !l.isReturned && new Date(l.dueDate) < new Date());
+
+        document.getElementById('activeCount').textContent   = active.length;
+        document.getElementById('returnedCount').textContent = returned.length;
+        document.getElementById('overdueCount').textContent  = overdue.length;
+
+        renderTab('active');
+    })();
+
+    function renderTab(tab) {
+        const active   = allLoans.filter(l => !l.isReturned);
+        const returned = allLoans.filter(l => l.isReturned);
+        const overdue  = allLoans.filter(l => !l.isReturned && new Date(l.dueDate) < new Date());
+
+        const lists = { active, returned, overdue };
+        const loans = lists[tab];
+
+        const html = loans.length === 0
+            ? '<p style="opacity:.7;text-align:center;padding:20px">Inga lån.</p>'
+            : loans.map(l => {
+                const isLate = !l.isReturned && new Date(l.dueDate) < new Date();
+                return `
+            <div class="loan-item">
+                <div style="flex:1">
+                    <div class="loan-title">${l.bookTitle}</div>
+                    <div class="loan-author">${l.bookAuthor || ''}</div>
+                    <div style="font-size:.8rem;opacity:.6;margin-top:4px">
+                        Användare: <strong>${l.user?.username || l.userId}</strong> •
+                        Lånad: ${fmt(l.borrowedDate)} •
+                        Förfaller: <span style="color:${isLate ? '#ff6b6b' : '#6ee7b7'}">${fmt(l.dueDate)}</span>
+                        ${l.isReturned ? ' • Returnerad: ' + fmt(l.returnedDate) : ''}
+                    </div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+                    <span class="loan-badge ${l.isReturned ? 'returned' : 'active'}">
+                        ${isLate ? '⚠️ Försenad' : l.isReturned ? '✅ Returnerad' : '📖 Aktiv'}
+                    </span>
+                    ${!l.isReturned ? `
+                    <button onclick="adminReturn(${l.id})"
+                        style="background:#06d6a0;border:none;color:#04342c;padding:6px 14px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.82rem">
+                        Återlämna
+                    </button>` : ''}
+                    <button onclick="adminDelete(${l.id})"
+                        style="background:rgba(220,53,69,0.15);border:1px solid rgba(220,53,69,0.4);color:#ff8896;padding:6px 14px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.82rem">
+                        Radera
+                    </button>
+                </div>
+            </div>`;
+            }).join('');
+
+        document.getElementById(`${tab}Tab`).innerHTML = html;
+    }
+
+    function showTab(tab) {
+        ['active','returned','overdue'].forEach(t => {
+            document.getElementById(`${t}Tab`).style.display = t === tab ? 'block' : 'none';
         });
-    </script>
+        document.querySelectorAll('.tab-btn').forEach((b, i) =>
+            b.classList.toggle('active', ['active','returned','overdue'][i] === tab));
+        renderTab(tab);
+    }
+
+    async function adminReturn(id) {
+        if (!confirm('Återlämna detta lån?')) return;
+        const res = await apiFetch(`/api/loans/${id}/return`, { method: 'POST' });
+        if (res.ok) {
+            const loan = allLoans.find(l => l.id === id);
+            if (loan) { loan.isReturned = true; loan.returnedDate = new Date().toISOString(); }
+            renderTab('active');
+            updateCounts();
+            showToast('✅ Lån återlämnat!');
+        }
+}
+
+    async function adminDelete(id) {
+        if (!confirm('Radera detta lån permanent?')) return;
+        const res = await apiFetch(`/api/loans/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+            allLoans = allLoans.filter(l => l.id !== id);
+            renderTab('active');
+            updateCounts();
+            showToast('🗑 Lån raderat!');
+        }
+}
+
+    function updateCounts() {
+        document.getElementById('activeCount').textContent   = allLoans.filter(l => !l.isReturned).length;
+        document.getElementById('returnedCount').textContent = allLoans.filter(l => l.isReturned).length;
+        document.getElementById('overdueCount').textContent  = allLoans.filter(l => !l.isReturned && new Date(l.dueDate) < new Date()).length;
+    }
+
+    function fmt(d) { return d ? new Date(d).toLocaleDateString('sv-SE') : '–'; }
+
+    function showToast(msg) {
+        const t = document.createElement('div');
+        t.textContent = msg;
+        t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:rgba(50,200,100,.9);color:#fff;padding:12px 24px;border-radius:12px;font-weight:600;z-index:9999;';
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 3000);
+    }
+</script>
 }

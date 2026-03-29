@@ -1,29 +1,44 @@
-﻿@model LibrarySystem_T4.Controllers.ItemViewModel
+@model LibrarySystem_T4.Models.ItemViewModel
 
 @{
-    ViewData["Title"] = "Skapa objekt";
+    ViewData["Title"] = "Lägg till bok";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/css/items.css" asp-append-version="true"/>
+<h1 class="page-title">➕ Lägg till bok</h1>
 
-<div class="items-page">
-    <div class="page-header">
-        <h2>Skapa nytt objekt</h2>
-        <a asp-action="Index" class="btn-back">← Tillbaka</a>
-    </div>
+<div class="glass-card" style="max-width:600px">
+    <form asp-action="Create" method="post">
+        <input type="hidden" name="IsAvailable" value="true" />
 
-    <form asp-action="Create" method="post" class="item-form">
         <div class="form-group">
             <label>Titel</label>
-            <input asp-for="Title" class="form-input" placeholder="Ange titel"/>
+            <input asp-for="Title" class="form-control" placeholder="Bokens titel"/>
         </div>
+
         <div class="form-group">
             <label>Beskrivning</label>
-            <input asp-for="Description" class="form-input" placeholder="Ange beskrivning"/>
+            <input asp-for="Description" class="form-control" placeholder="Kort beskrivning"/>
         </div>
+
+        <div class="form-group">
+            <label>Författare</label>
+            <input asp-for="Author" class="form-control" placeholder="Författarens namn"/>
+        </div>
+
+        <div class="form-group">
+            <label>Utgivningsår</label>
+            <input asp-for="PublishYear" class="form-control" type="number" placeholder="t.ex. 2023" min="1000" max="2099"/>
+        </div>
+
+        <div class="form-group">
+            <label>Antal exemplar</label>
+            <input asp-for="TotalCopies" class="form-control" type="number" value="1" min="1" max="99"/>
+        </div>
+
         <div class="form-group">
             <label>Kategori</label>
-            <select asp-for="Category" class="form-input">
+            <select asp-for="Category" class="form-control">
                 <option value="">Välj kategori</option>
                 @foreach (var cat in ViewBag.Categories)
                 {
@@ -31,10 +46,16 @@
                 }
             </select>
         </div>
-        <div class="form-group">
-            <label>Tillgänglig</label>
-            <input asp-for="IsAvailable" type="checkbox" class="form-checkbox"/>
+
+        <div style="display:flex;gap:12px;margin-top:20px">
+            <button type="submit"
+                    style="background:#06d6a0;border:none;color:#04342c;padding:10px 24px;border-radius:10px;font-weight:700;cursor:pointer;font-size:1rem">
+                ➕ Lägg till
+            </button>
+            <a asp-action="Index"
+               style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;padding:10px 24px;border-radius:10px;font-weight:700;text-decoration:none">
+                ← Tillbaka
+            </a>
         </div>
-        <button type="submit" class="btn-create">Skapa</button>
     </form>
 </div>
