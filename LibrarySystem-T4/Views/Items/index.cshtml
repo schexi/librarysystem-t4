@@ -1,39 +1,158 @@
-﻿@model List<LibrarySystem_T4.Controllers.ItemViewModel>
+﻿@model List<LibrarySystem_T4.Models.ItemViewModel>
 
 @{
-    ViewData["Title"] = "Items";
+ViewData["Title"] = "Böcker";
 }
 
-<link rel="stylesheet" href="~/css/items.css" asp-append-version="true"/>
-
-<div class="items-page">
-    <div class="page-header">
-        <h2>Böcker</h2>
-        <a asp-action="Create" class="btn-new">+ Nytt objekt</a>
+<div style="max-width:1100px;margin:40px auto;padding:0 20px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+        <h1 style="color:white;font-size:2rem;font-weight:700">Böcker</h1>
+        <span id="admin-add-item" style="display:none">
+            <a asp-action="Create"
+               style="background:#06d6a0;color:#04342c;padding:10px 24px;border-radius:10px;font-weight:700;text-decoration:none">
+                + Ny bok
+            </a>
+        </span>
     </div>
 
-    <div class="items-grid">
+    <div id="bookGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px">
         @if (Model != null && Model.Any())
         {
-            @foreach (var item in Model)
-            {
-                <div class="item-card">
-                    <h5 class="item-title">@item.Title</h5>
-                    <p class="item-category">@item.Category</p>
-                    <p class="item-description">@item.Description</p>
-                    <div class="item-actions">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-edit">Redigera</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-delete">Ta bort</a>
-                        <span class="item-status @(item.IsAvailable ? "available" : "unavailable")">
-                            @(item.IsAvailable ? "Tillgänglig" : "Utlånad")
+        @foreach (var item in Model)
+        {
+        <div id="card-@item.Id"
+             style="background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:8px">
+            <h3 style="color:white;font-size:1.05rem;font-weight:700;margin:0">@item.Title</h3>
+            <div id="meta-@item.Id" style="font-size:.82rem;color:rgba(255,255,255,0.55)">
+                @item.Category
+            </div>
+            <p style="color:rgba(255,255,255,0.75);font-size:.9rem;flex:1;margin:0">@item.Description</p>
+
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px">
+                        <span id="status-badge-@item.Id"
+                              style="padding:4px 12px;border-radius:20px;font-size:.78rem;font-weight:700;
+                                  background:@(item.IsAvailable ? "rgba(6,214,160,0.2)" : "rgba(220,53,69,0.2)");
+                                  color:@(item.IsAvailable ? "#6ee7b7" : "#ff8896")">
+                            @(item.IsAvailable ? "✓ Tillgänglig" : "✗ Utlånad")
                         </span>
-                    </div>
-                </div>
-            }
+
+                @if (item.IsAvailable)
+                {
+                <button id="borrow-btn-@item.Id"
+                        onclick="borrowItem(@item.Id, '@item.Title.Replace("'", "\\'")')"
+                        style="background:#06d6a0;border:none;color:#04342c;padding:5px 14px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.85rem">
+                    📖 Låna
+                </button>
+                }
+                else
+                {
+                <span style="padding:5px 14px;border-radius:8px;background:rgba(220,53,69,0.2);color:#ff8896;font-size:.85rem;font-weight:700">
+                                ✗ Utlånad
+                            </span>
+                }
+
+                <span class="admin-item-actions" style="display:none;gap:6px;flex-wrap:wrap">
+                            <a asp-action="Edit" asp-route-id="@item.Id"
+                               style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;padding:5px 12px;border-radius:8px;text-decoration:none;font-size:.82rem;font-weight:600">
+                                ✏️ Redigera
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id"
+                               style="background:rgba(220,53,69,0.15);border:1px solid rgba(220,53,69,0.4);color:#ff8896;padding:5px 12px;border-radius:8px;text-decoration:none;font-size:.82rem;font-weight:600"
+                               onclick="return confirm('Ta bort @item.Title?')">
+                                🗑️ Ta bort
+                            </a>
+                        </span>
+            </div>
+        </div>
+        }
         }
         else
         {
-            <p class="no-items">Inga items hittades.</p>
+        <p style="color:rgba(255,255,255,0.7)">Inga böcker hittades.</p>
         }
     </div>
 </div>
+
+@section Scripts {
+<script>
+    const user = JSON.parse(localStorage.getItem('user_info') || 'null');
+
+    if (user && user.role === 'Admin') {
+        document.getElementById('admin-add-item').style.display = 'inline';
+        document.querySelectorAll('.admin-item-actions').forEach(el => el.style.display = 'flex');
+    }
+
+    // Hämta BookMeta och visa author/år
+    (async () => {
+        try {
+            const res = await fetch('/api/bookmeta/all');
+            if (!res.ok) return;
+            const metas = await res.json();
+            metas.forEach(m => {
+                const el = document.getElementById(`meta-${m.itemId}`);
+                if (!el) return;
+                let text = el.textContent.trim();
+                if (m.author) text += ` · ${m.author}`;
+                if (m.publishYear) text += ` (${m.publishYear})`;
+                if (m.totalCopies > 1) text += ` · ${m.totalCopies} ex`;
+                el.textContent = text;
+            });
+        } catch {}
+})();
+
+    // Markera redan lånade böcker
+    (async () => {
+        if (!user) return;
+        const res = await apiFetch(`/api/loans/user/${user.id}`);
+        if (!res.ok) return;
+        const myLoans = await res.json();
+        myLoans.filter(l => !l.isReturned).forEach(l => {
+            const btn = document.getElementById(`borrow-btn-${l.itemId}`);
+            if (btn) {
+                btn.textContent      = '✓ Redan lånad';
+                btn.style.background = '#6b7280';
+                btn.style.cursor     = 'not-allowed';
+                btn.disabled         = true;
+            }
+        });
+    })();
+
+    async function borrowItem(itemId, title) {
+        if (!user) { window.location.href = '/Authorization/Login'; return; }
+        if (!confirm(`Låna "${title}"?`)) return;
+
+        const res = await apiFetch('/api/loans/borrow', {
+            method: 'POST',
+            body: JSON.stringify({ itemId, userId: user.id, title })
+        });
+
+        if (res.ok) {
+            const btn = document.getElementById(`borrow-btn-${itemId}`);
+            if (btn) {
+                btn.textContent      = '✓ Redan lånad';
+                btn.style.background = '#6b7280';
+                btn.style.cursor     = 'not-allowed';
+                btn.disabled         = true;
+            }
+            const badge = document.getElementById(`status-badge-${itemId}`);
+            if (badge) {
+                badge.textContent      = '✗ Utlånad';
+                badge.style.background = 'rgba(220,53,69,0.2)';
+                badge.style.color      = '#ff8896';
+            }
+            showToast('✅ Boken lånad! Kolla Mina lån.');
+        } else {
+            const msg = await res.text();
+            showToast('❌ ' + (msg || 'Något gick fel.'));
+        }
+}
+
+    function showToast(msg) {
+        const t = document.createElement('div');
+        t.textContent = msg;
+        t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:rgba(50,200,100,.9);color:#fff;padding:12px 24px;border-radius:12px;font-weight:600;z-index:9999;';
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 3000);
+    }
+</script>
+}

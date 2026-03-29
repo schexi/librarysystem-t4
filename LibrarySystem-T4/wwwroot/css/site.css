@@ -1,31 +1,281 @@
-html {
-  font-size: 14px;
+/* ─── RESET & BASE ─────────────────────────────────────────── */
+html { font-size: 14px; }
+@media (min-width: 768px) { html { font-size: 16px; } }
+
+body { margin-bottom: 0; }
+
+/* ─── TYPSNITT ─────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
+body { font-family: 'Outfit', 'Segoe UI', sans-serif; }
+
+/* ─── SIDTITEL ─────────────────────────────────────────────── */
+.page-title {
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 32px auto 20px;
+  max-width: 900px;
+  padding: 0 16px;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+/* ─── GLASS-KORT ────────────────────────────────────────────── */
+.glass-card {
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 18px;
+  padding: 28px 32px;
+  margin: 0 auto 32px;
+  width: 100%;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+/* ─── STATISTIKRUTOR ────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+.stat-box {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 12px;
+  padding: 18px 20px;
+  text-align: center;
+}
+.stat-box label {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 8px;
+}
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+/* ─── TABBAR ────────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.tab-btn {
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white;
+  background: rgba(255,255,255,0.08);
+  transition: background 0.2s;
+  font-family: inherit;
+}
+.tab-btn:hover { background: rgba(255,255,255,0.18); }
+.tab-btn.active { background: white; color: #0f4c75; border-color: white; }
+
+/* ─── FORMULÄR ──────────────────────────────────────────────── */
+.form-group { margin-bottom: 18px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+
+.form-group label {
+  display: block;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px;
+  color: white;
+  font-size: 0.95rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: border-color 0.2s, background 0.2s;
+}
+.form-control::placeholder { color: rgba(255,255,255,0.4); }
+.form-control:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.18);
+}
+select.form-control option { background: #0d3b6e; color: white; }
+
+/* ─── KNAPPAR ───────────────────────────────────────────────── */
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: #06d6a0;
+  border: none;
+  border-radius: 10px;
+  color: #04342c;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+  text-align: center;
+  text-decoration: none;
+}
+.btn-primary:hover { background: #04b386; color: #04342c; }
+
+.btn-danger {
+  padding: 7px 14px;
+  background: rgba(220,53,69,0.15);
+  border: 1px solid rgba(220,53,69,0.4);
+  border-radius: 8px;
+  color: #ff8896;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+.btn-danger:hover { background: rgba(220,53,69,0.30); }
+
+.btn-secondary {
+  padding: 7px 14px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.22); }
+
+/* ─── ALERTS ────────────────────────────────────────────────── */
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+  display: none;
+}
+.alert-error {
+  background: rgba(244,63,94,0.15);
+  border: 1px solid rgba(244,63,94,0.35);
+  color: #fda4af;
+}
+.alert-success {
+  background: rgba(16,185,129,0.15);
+  border: 1px solid rgba(16,185,129,0.35);
+  color: #6ee7b7;
 }
 
-body {
-  margin-bottom: 60px;
+/* ─── TABELL ────────────────────────────────────────────────── */
+.table-wrapper {
+  margin: 0 auto 32px;
+  padding: 0 16px;
 }
-
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
+.table-header h2 { color: white; font-size: 1.1rem; font-weight: 700; }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255,255,255,0.07);
+  border-radius: 12px;
+  overflow: hidden;
+}
+thead { background: rgba(255,255,255,0.12); }
+th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.7);
+  font-weight: 600;
+}
+td {
+  padding: 12px 16px;
+  color: white;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+tr:hover td { background: rgba(255,255,255,0.05); }
+
+/* ─── SÖK-INPUT ─────────────────────────────────────────────── */
+.search-input {
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px;
+  color: white;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+.search-input::placeholder { color: rgba(255,255,255,0.5); }
+.search-input:focus { outline: none; border-color: rgba(255,255,255,0.5); }
+
+/* ─── LÅN-ITEMS ─────────────────────────────────────────────── */
+.loan-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+.loan-title { font-size: 1rem; font-weight: 600; color: white; }
+.loan-author { font-size: 0.85rem; color: rgba(255,255,255,0.65); margin-top: 3px; }
+.loan-badge {
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.loan-badge.active   { background: rgba(255,200,0,0.2);   color: #fde68a; }
+.loan-badge.returned { background: rgba(16,185,129,0.2);  color: #6ee7b7; }
+
+/* ─── BOKGRID ───────────────────────────────────────────────── */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.book-card {
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 14px;
+  padding: 20px;
+  color: white;
+  transition: transform 0.2s, background 0.2s;
+  animation: fadeUp 0.4s ease both;
+}
+.book-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.16); }
+.book-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+.book-card p  { font-size: 0.82rem; opacity: 0.7; margin: 0; }
+
+/* ─── ANIMATIONER ───────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
