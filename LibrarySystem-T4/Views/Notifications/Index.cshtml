@@ -1,0 +1,99 @@
+@model IEnumerable<LibrarySystem_T4.Models.Notification>
+
+@* Delar av implementationen har utvecklats med stöd av AI-baserade verktyg. 
+   Lösningen har därefter anpassats, testats och integrerats i projektet självständigt. *@
+
+<h1 class="notifications-title">Notifikationer</h1>
+
+<div class="notifications-list">
+@foreach (var n in Model)
+{
+    <div class="notification-card">
+        <div class="notification-header">
+            <h3>@n.Title</h3>
+            <span class="notification-type">@n.Type</span>
+        </div>
+
+        <p class="notification-message">@n.Message</p>
+
+        <div class="notification-meta">
+            <span><strong>Åtgärd:</strong> @n.ActionType</span>
+            @if (n.ItemId.HasValue)
+            {
+                <span><strong>Bok-ID:</strong> @n.ItemId</span>
+            }
+            @if (n.Deadline.HasValue)
+            {
+                <span><strong>Deadline:</strong> @n.Deadline.Value.ToString("yyyy-MM-dd")</span>
+            }
+        </div>
+
+        <div class="notification-footer">
+            <small>Skapad: @n.CreatedAt.ToString("yyyy-MM-dd HH:mm")</small>
+        </div>
+    </div>
+}
+</div>
+
+<style>
+.notifications-title {
+    color: white;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+.notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 40px;
+}
+
+.notification-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.notification-header h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #1f2a44;
+}
+
+.notification-type {
+    background: #e8f3ff;
+    color: #1f5f99;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.notification-message {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.notification-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 12px;
+    color: #444;
+}
+
+.notification-footer {
+    color: #666;
+}
+</style>
