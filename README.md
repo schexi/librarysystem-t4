@@ -1,6 +1,8 @@
-Deploy-MVC är huvud-applikationen som fungerar, det är den som är driftsatt i azure via:
+Branchen Deploy-MVC är huvud-applikationen som fungerar, det är den som är driftsatt i azure via:
 
 https://t4bibliotek.azurewebsites.net/
+
+Dock har innehållet från Deploy-MVC kopierats över till main för tydlighet. Huvudapplikationen i Azure är dock integrerad CI/CD med Deploy-MVC sen start och behålls därför så.
 
 *Versionen som är driftsatt i Azure är den senaste stabila versionen av systemet som vi har, då vissa APIer innehöll problem eller inte kunde driftsättas förrän kritiskt nära deadline, vilket resulterade i att gruppen behöll det stabila systemet som var preparerat för integration för att undvika last minute kraschar.*
 
