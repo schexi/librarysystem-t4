@@ -8,42 +8,117 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: linear-gradient(135deg, #0d3b6e 0%, #1b9aaa 50%, #06d6a0 100%); min-height: 100vh; font-family: "Segoe UI", sans-serif; display: flex; flex-direction: column; }
-        nav { background: rgba(255,255,255,0.15) !important; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.25) !important; border-radius: 16px; margin: 16px; padding: 10px 24px !important; }
-        .navbar-brand { color: white !important; font-weight: 700; font-size: 1.3rem; text-decoration: none; }
-        .nav-link { color: white !important; font-weight: 600; padding: 8px 16px !important; border-radius: 8px; font-size: 0.95rem !important; border: 1px solid rgba(255,255,255,0.3); transition: background 0.2s; }
+        body {
+            background: linear-gradient(135deg, #0d3b6e 0%, #1b9aaa 50%, #06d6a0 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+        nav {
+            background: rgba(255,255,255,0.15) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.25) !important;
+            border-radius: 16px;
+            margin: 12px 16px;
+            padding: 8px 20px !important;
+        }
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .nav-link {
+            color: white !important;
+            font-weight: 600;
+            padding: 6px 12px !important;
+            border-radius: 8px;
+            font-size: 0.85rem !important;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
         .nav-link:hover { background: rgba(255,255,255,0.2); color: white !important; }
-        .btn-nav { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white !important; border-radius: 20px; padding: 6px 18px; font-size: 0.85rem; cursor: pointer; text-decoration: none; transition: background 0.2s; }
-        .btn-nav:hover { background: rgba(255,255,255,0.28); color: white !important; }
-        .btn-nav-logout { color: #fda4af !important; border-color: rgba(253,164,175,0.4); }
+        .btn-login {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white !important;
+            border-radius: 20px;
+            padding: 0.25rem 1rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .btn-login:hover { background: rgba(255,255,255,0.25); color: white !important; }
+        .btn-logout {
+            background: rgba(244,63,94,0.2);
+            border: 1px solid rgba(244,63,94,0.4);
+            color: #fda4af !important;
+            border-radius: 20px;
+            padding: 0.25rem 1rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .btn-logout:hover { background: rgba(244,63,94,0.35); }
         main { flex: 1; padding: 0 16px; }
-        footer { background: rgba(0,0,0,0.2); color: rgba(255,255,255,0.7); text-align: center; padding: 16px; font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        footer {
+            background: rgba(0,0,0,0.2);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 16px;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
     </style>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">HV Bibliotek</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <a class="navbar-brand" href="/">📖 HV Bibliotek</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav gap-2 flex-grow-1 justify-content-center" id="nav-main" style="display:none">
-                    <li class="nav-item"><a class="nav-link" asp-controller="Items" asp-action="Index">Bocker</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Categories" asp-action="Index">Kategorier</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Loans" asp-action="Index">Mina lan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://user-api-adde.azurewebsites.net/User/Profile">Min profil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://user-api-adde.azurewebsites.net/User/Update">Uppdatera profil</a></li>
-                    <li class="nav-item" id="nav-admin-loans" style="display:none"><a class="nav-link" asp-controller="Admin" asp-action="Loans">Admin lan</a></li>
-                    <li class="nav-item" id="nav-admin-users" style="display:none"><a class="nav-link" href="https://user-api-adde.azurewebsites.net/Admin/Users">Hantera anvandare</a></li>
-                </ul>
-                <ul class="navbar-nav gap-2 align-items-center ms-auto">
-                    <li class="nav-item" id="nav-login-btn"><a class="btn-nav" href="https://user-api-adde.azurewebsites.net/Authorization/Login">Logga in</a></li>
-                    <li class="nav-item" id="nav-profile-btn" style="display:none"><a class="btn-nav" href="https://user-api-adde.azurewebsites.net/User/Profile">👤 <span id="nav-username"></span></a></li>
-                    <li class="nav-item" id="nav-logout-btn" style="display:none"><a class="btn-nav btn-nav-logout" onclick="logout()" style="cursor:pointer">Logga ut</a></li>
+            <div class="navbar-collapse collapse justify-content-center flex-grow-1">
+                <ul class="navbar-nav gap-1">
+                    <li class="nav-item" id="nav-books" style="display:none">
+                        <a class="nav-link" href="/Items">📚 Böcker</a>
+                    </li>
+                    <li class="nav-item" id="nav-categories" style="display:none">
+                        <a class="nav-link" href="/Categories">🏷️ Kategorier</a>
+                    </li>
+                    <li class="nav-item" id="nav-loans" style="display:none">
+                        <a class="nav-link" href="/User/Loans">📖 Mina lån</a>
+                    </li>
+                    <li class="nav-item" id="nav-admin-loans" style="display:none">
+                        <a class="nav-link" href="/Admin/Loans">⚙️ Lån</a>
+                    </li>
+                    <li class="nav-item" id="nav-admin-users" style="display:none">
+                        <a class="nav-link" href="/Admin/Users">👥 Användare</a>
+                    </li>
+                    <li class="nav-item" id="nav-admin-main" style="display:none">
+                        <a class="nav-link" href="/Admin">🛠️ Admin</a>
+                    </li>
                 </ul>
             </div>
+            <ul class="navbar-nav gap-1 align-items-center">
+                <li class="nav-item" id="nav-login-btn">
+                    <a class="btn-login" href="/Authorization/Login">Logga in</a>
+                </li>
+                <li class="nav-item" id="nav-profile-btn" style="display:none">
+                    <a class="btn-login" href="/User/Profile">👤 <span id="nav-username"></span></a>
+                </li>
+                <li class="nav-item" id="nav-logout-btn" style="display:none">
+                    <a class="btn-logout" onclick="logout()" style="cursor:pointer">Logga ut</a>
+                </li>
+            </ul>
         </div>
     </nav>
 </header>
@@ -58,34 +133,6 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
-<script>
-function checkLogin() {
-    var token = localStorage.getItem("jwt_token");
-    var user = JSON.parse(localStorage.getItem("user_info") || "null");
-    if (token && user) {
-        document.getElementById("nav-login-btn").style.display = "none";
-        document.getElementById("nav-profile-btn").style.display = "list-item";
-        document.getElementById("nav-logout-btn").style.display = "list-item";
-        document.getElementById("nav-main").style.display = "flex";
-        document.getElementById("nav-username").textContent = user.username || user.Username || "";
-        if (user.role === "Admin" || user.role === "admin") {
-            document.getElementById("nav-admin-loans").style.display = "list-item";
-            document.getElementById("nav-admin-users").style.display = "list-item";
-        }
-    } else {
-        document.getElementById("nav-login-btn").style.display = "list-item";
-        document.getElementById("nav-profile-btn").style.display = "none";
-        document.getElementById("nav-logout-btn").style.display = "none";
-        document.getElementById("nav-main").style.display = "none";
-    }
-}
-function logout() {
-    localStorage.removeItem("jwt_token");
-    localStorage.removeItem("user_info");
-    window.location.href = "/";
-}
-checkLogin();
-</script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

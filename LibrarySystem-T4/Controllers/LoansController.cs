@@ -1,29 +1,126 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using LibrarySystem_T4.Data;
 using LibrarySystem_T4.Models;
+using LibrarySystem_T4.Models.Entities;
 using LibrarySystem_T4.Services;
 
 namespace LibrarySystem_T4.Controllers;
 
-// Controller för att ta emot anrop samt delegera till LoanService
-public class LoansController : Controller
+[ApiController]
+[Route("api/loans")]
+[Authorize]
+public class LoansApiController(ApplicationDbContext context) : ControllerBase
 {
-    private readonly LoanService _loanService; // Hanterar all kommunikation med Loans API
-    private readonly IConfiguration _config; // Läser konfigurationsvärden från user-secrets eller Azure
-
-    public LoansController(LoanService loanService, IConfiguration config)
+    [HttpGet("user/{userId:int}")]
+    public async Task<IActionResult> GetUserLoans(int userId)
     {
-        _loanService = loanService;
-        _config = config;
+        var requesterId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var isAdmin     = User.IsInRole("Admin");
+        if (requesterId != userId && !isAdmin) return Forbid();
+
+        var loans = await context.Loans
+            .Where(l => l.UserId == userId)
+            .OrderByDescending(l => l.BorrowedDate)
+            .ToListAsync();
+
+        return Ok(loans);
     }
 
-    // GET-metod, visar lista på alla lån
+    [HttpPost("borrow")]
+    public async Task<IActionResult> BorrowItem([FromBody] BorrowRequest req)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+        var existing = await context.Loans
+            .AnyAsync(l => l.UserId == userId && l.ItemId == req.ItemId && !l.IsReturned);
+        if (existing) return BadRequest("Du har redan lånat detta objekt.");
+
+        var loan = new LoanEntity
+        {
+            UserId       = userId,
+            ItemId       = req.ItemId,
+            BookTitle    = req.Title  ?? "Okänd titel",
+            BookAuthor   = req.Author ?? "",
+            BorrowedDate = DateTime.UtcNow,
+            DueDate      = DateTime.UtcNow.AddDays(28),
+            IsReturned   = false
+        };
+
+        context.Loans.Add(loan);
+        await context.SaveChangesAsync();
+        return Ok(loan);
+    }
+
+    [HttpPost("{id:int}/return")]
+    public async Task<IActionResult> ReturnLoan(int id)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var loan   = await context.Loans.FindAsync(id);
+        if (loan == null) return NotFound();
+        if (loan.UserId != userId && !User.IsInRole("Admin")) return Forbid();
+
+        loan.IsReturned   = true;
+        loan.ReturnedDate = DateTime.UtcNow;
+        await context.SaveChangesAsync();
+        return Ok(new { message = "Lån återlämnat." });
+    }
+
+    [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> DeleteLoan(int id)
+    {
+        var loan = await context.Loans.FindAsync(id);
+        if (loan == null) return NotFound();
+        context.Loans.Remove(loan);
+        await context.SaveChangesAsync();
+        return Ok(new { message = "Lån raderat." });
+    }
+
+    [HttpGet("overdue")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetOverdue()
+    {
+        var loans = await context.Loans
+            .Where(l => !l.IsReturned && l.DueDate < DateTime.UtcNow)
+            .Include(l => l.User)
+            .ToListAsync();
+        return Ok(loans);
+    }
+
+    [HttpGet("all")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetAll()
+    {
+        var loans = await context.Loans
+            .Include(l => l.User)
+            .OrderByDescending(l => l.BorrowedDate)
+            .ToListAsync();
+        return Ok(loans);
+    }
+}
+
+public class BorrowRequest
+{
+    public int     ItemId { get; set; }
+    public int     UserId { get; set; }
+    public string? Title  { get; set; }
+    public string? Author { get; set; }
+}
+
+public class LoansController : Controller
+{
+    private readonly LoanService _loanService;
+    public LoansController(LoanService loanService) { _loanService = loanService; }
+
     public async Task<IActionResult> Index()
     {
         var loans = await _loanService.GetAllAsync();
         return View(loans);
     }
 
-    // GET-metod för att visa detaljsidan för ett specifikt lån
     public async Task<IActionResult> Details(int id)
     {
         var loan = await _loanService.GetByIdAsync(id);
@@ -31,29 +128,6 @@ public class LoansController : Controller
         return View(loan);
     }
 
-    // GET-metod för att visa formulär för att skapa ett nytt lån
-    public IActionResult Create(int itemId)
-    {
-        var model = new LoanViewModel
-        {
-            ItemId = itemId,
-            DueDate = DateTime.Now.AddDays(28), // Förfallodatum sätts automatiskt 4 veckor framåt
-            BorrowerName = "Admin Test", // TODO: Ska hämtas från Users API
-            BorrowerEmail = "admin@mail.com" // TODO: Ska hämtas från Users API
-        };
-        return View(model);
-    }
-
-    // POST-metod för att skicka formulärdata till Loans API
-    [HttpPost]
-    public async Task<IActionResult> Create(LoanViewModel model)
-    {
-        var success = await _loanService.CreateAsync(model);
-        if (success) return RedirectToAction("Index");
-        return View(model); // Visa formuläret igen om något gick fel
-    }
-
-    // POST-metod för att återlämna lån
     [HttpPost]
     public async Task<IActionResult> Return(int id)
     {
@@ -61,7 +135,6 @@ public class LoansController : Controller
         return RedirectToAction("Index");
     }
 
-    // POST-metod för att radera ett lån
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {

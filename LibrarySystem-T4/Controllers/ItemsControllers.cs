@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Json;
+using LibrarySystem_T4.Models;
 
 namespace LibrarySystem_T4.Controllers;
 
 public class ItemsController : Controller
 {
     private readonly HttpClient _httpClient;
-    private const string ApiUrl = "https://items-api-adcac3a6hndtc0c5.norwayeast-01.azurewebsites.net/api/items";
+    private const string ApiUrl         = "https://items-api-adcac3a6hndtc0c5.norwayeast-01.azurewebsites.net/api/items";
     private const string CategoryApiUrl = "https://kategori-cbc6adfyhwafa3fd.norwayeast-01.azurewebsites.net/api/categories";
 
     public ItemsController(IHttpClientFactory httpClientFactory)
@@ -21,55 +22,75 @@ public class ItemsController : Controller
             var items = await _httpClient.GetFromJsonAsync<List<ItemViewModel>>(ApiUrl);
             return View(items);
         }
-        catch (Exception ex)
-        {
-            return Content(ex.Message);
-        }
+        catch (Exception ex) { return Content(ex.Message); }
     }
 
+    [HttpGet]
     public async Task<IActionResult> Create()
     {
-        var categories = await _httpClient.GetFromJsonAsync<List<LibrarySystem_T4.Models.CategoryViewModel>>(CategoryApiUrl);
-        ViewBag.Categories = categories ?? new List<LibrarySystem_T4.Models.CategoryViewModel>();
+        try
+        {
+            var categories = await _httpClient.GetFromJsonAsync<List<CategoryViewModel>>(CategoryApiUrl);
+            ViewBag.Categories = categories ?? new();
+        }
+        catch
+        {
+            ViewBag.Categories = new List<CategoryViewModel>();
+        }
         return View();
     }
 
     [HttpPost]
     public async Task<IActionResult> Create(ItemViewModel item)
     {
-        item.Id = 0;
-        await _httpClient.PostAsJsonAsync(ApiUrl, item);
-        return RedirectToAction("Index");
+        item.Id          = 0;
+        item.IsAvailable = true;
+        item.AddedDate   = DateTime.UtcNow;
+
+        var response = await _httpClient.PostAsJsonAsync(ApiUrl, item);
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            return Content($"Fel från Items-API: {response.StatusCode} — {error}");
+        }
+
+        var created = await response.Content.ReadFromJsonAsync<ItemViewModel>();
+        if (created != null && (!string.IsNullOrEmpty(item.Author) || item.PublishYear.HasValue))
+        {
+            await _httpClient.PostAsJsonAsync(
+                "https://t4bibliotek.azurewebsites.net/api/bookmeta",
+                new { itemId = created.Id, author = item.Author ?? "", publishYear = item.PublishYear, totalCopies = item.TotalCopies }
+            );
+        }
+
+        return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var item = await _httpClient.GetFromJsonAsync<ItemViewModel>($"{ApiUrl}/{id}");
-        var categories = await _httpClient.GetFromJsonAsync<List<LibrarySystem_T4.Models.CategoryViewModel>>(CategoryApiUrl);
-        ViewBag.Categories = categories ?? new List<LibrarySystem_T4.Models.CategoryViewModel>();
+        var item       = await _httpClient.GetFromJsonAsync<ItemViewModel>($"{ApiUrl}/{id}");
+        var categories = await _httpClient.GetFromJsonAsync<List<CategoryViewModel>>(CategoryApiUrl);
+        ViewBag.Categories = categories ?? new();
         return View(item);
     }
 
     [HttpPost]
     public async Task<IActionResult> Edit(int id, ItemViewModel item)
     {
-        await _httpClient.PutAsJsonAsync($"{ApiUrl}/{id}", item);
-        return RedirectToAction("Index");
+        var response = await _httpClient.PutAsJsonAsync($"{ApiUrl}/{id}", item);
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            return Content($"Fel från Items-API: {response.StatusCode} — {error}");
+        }
+        return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
         await _httpClient.DeleteAsync($"{ApiUrl}/{id}");
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
     }
-}
-
-public class ItemViewModel
-{
-    public int Id { get; set; }
-    public string Title { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
-    public string Category { get; set; } = string.Empty;
-    public bool IsAvailable { get; set; }
-    public DateTime AddedDate { get; set; } = DateTime.UtcNow;
 }
