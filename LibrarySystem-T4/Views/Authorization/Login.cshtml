@@ -1,0 +1,74 @@
+@{
+ViewData["Title"] = "Logga in";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="page-title">Logga in</h1>
+
+<div class="glass-card" style="max-width:480px">
+    <div id="alertBox" class="alert alert-error"></div>
+    <div class="form-group">
+        <label>Användarnamn</label>
+        <input id="username" class="form-control" type="text" placeholder="ditt användarnamn"/>
+    </div>
+    <div class="form-group">
+        <label>Lösenord</label>
+        <input id="password" class="form-control" type="password" placeholder="••••••••"/>
+    </div>
+    <button onclick="login()"
+            style="display:block;width:100%;padding:12px;background:#06d6a0;border:none;border-radius:10px;color:#04342c;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px">
+        Logga in
+    </button>
+    <p style="text-align:center;margin-top:14px;font-size:.9rem;color:rgba(255,255,255,0.8)">
+        Inget konto? <a href="/Authorization/Register" style="color:#fff;font-weight:600">Registrera</a>
+    </p>
+</div>
+
+@section Scripts {
+<script>
+    async function login() {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+        const alertEl  = document.getElementById('alertBox');
+        alertEl.style.display = 'none';
+
+        if (!username || !password) {
+            alertEl.textContent   = 'Fyll i användarnamn och lösenord.';
+            alertEl.style.display = 'block';
+            return;
+        }
+
+        const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+
+        if (res.ok) {
+            const data = await res.json();
+
+            localStorage.setItem('jwt_token', data.token);
+            localStorage.setItem('user_info', JSON.stringify({
+                id:        data.id,
+                username:  data.username,
+                firstName: data.firstName,
+                lastName:  data.lastName,
+                email:     data.email,
+                role:      data.role
+            }));
+
+            if (data.role === 'Admin') {
+                window.location.href = '/Admin';
+            } else {
+                window.location.href = '/Items';
+            }
+        } else {
+            const msg = await res.text();
+            alertEl.textContent   = msg || 'Fel användarnamn eller lösenord.';
+            alertEl.style.display = 'block';
+        }
+}
+
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+</script>
+}

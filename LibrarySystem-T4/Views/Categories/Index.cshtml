@@ -1,0 +1,58 @@
+@model List<LibrarySystem_T4.Models.CategoryViewModel>
+
+@{
+    ViewData["Title"] = "Kategorier";
+}
+
+<div style="max-width:1100px;margin:40px auto;padding:0 20px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+        <h1 style="color:white;font-size:2rem;font-weight:700">Kategorier</h1>
+        <span id="admin-add-cat" style="display:none">
+            <a asp-action="Create"
+               style="background:#06d6a0;color:#04342c;padding:10px 24px;border-radius:10px;font-weight:700;text-decoration:none">
+                + Ny kategori
+            </a>
+        </span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var cat in Model)
+            {
+                <div style="background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);border-radius:14px;padding:24px">
+                    <h3 style="color:white;font-size:1.1rem;font-weight:700;margin-bottom:6px">@cat.Name</h3>
+                    <p style="color:rgba(255,255,255,0.65);font-size:.9rem;margin-bottom:16px">@cat.Description</p>
+                    <div class="admin-cat-actions" style="display:none;gap:8px">
+                        <a asp-action="Edit" asp-route-id="@cat.Id"
+                           style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;padding:7px 16px;border-radius:8px;text-decoration:none;font-size:.85rem;font-weight:600">
+                            Redigera
+                        </a>
+                        <form asp-action="Delete" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@cat.Id"/>
+                            <button type="submit"
+                                    style="background:rgba(220,53,69,0.15);border:1px solid rgba(220,53,69,0.4);color:#ff8896;padding:7px 16px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer"
+                                    onclick="return confirm('Ta bort @cat.Name?')">
+                                Ta bort
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p style="color:rgba(255,255,255,0.7)">Inga kategorier hittades.</p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+<script>
+const user = JSON.parse(localStorage.getItem('user_info') || 'null');
+if (user && user.role === 'Admin') {
+    document.getElementById('admin-add-cat').style.display = 'inline';
+    document.querySelectorAll('.admin-cat-actions').forEach(el => el.style.display = 'flex');
+}
+</script>
+}
