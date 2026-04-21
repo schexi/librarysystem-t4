@@ -1,0 +1,32 @@
+@model IEnumerable<LibrarySystemFrontend.Models.Notification>
+
+<h1>Notifications</h1>
+
+<div class="notifications">
+    @foreach (var n in Model)
+    {
+        <div class="notification-card">
+            <h3>@n.Title</h3>
+            <p>@n.Message</p>
+
+            <small>
+                Created: @n.CreatedAt
+            </small>
+        </div>
+    }
+</div>
+
+<style>
+.notifications {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.notification-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+</style>
