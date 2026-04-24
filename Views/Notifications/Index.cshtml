@@ -1,0 +1,40 @@
+@model IEnumerable<LibrarySystem_T4.Models.Notification>
+
+@{
+    ViewData["Title"] = "Notifikationer";
+}
+
+<h1 class="page-title">Notifikationer</h1>
+
+<div class="glass-card" style="max-width: 1100px;">
+    @if (Model == null || !Model.Any())
+    {
+        <p style="color: white; margin: 0;">Inga notifikationer att visa.</p>
+    }
+    else
+    {
+        @foreach (var n in Model)
+        {
+            <div style="border:1px solid rgba(255,255,255,0.2); border-radius:14px; padding:20px; margin-bottom:16px; background: rgba(255,255,255,0.08); color:white;">
+                <h3 style="margin-bottom:10px;">@n.Title</h3>
+                <p>@n.Message</p>
+                <p><strong>Typ:</strong> @n.Type</p>
+                <p><strong>Åtgärd:</strong> @n.ActionType</p>
+
+                @if (n.ItemId.HasValue)
+                {
+                    <p><strong>Bok-ID:</strong> @n.ItemId</p>
+                }
+
+                @if (n.Deadline.HasValue)
+                {
+                    <p><strong>Deadline:</strong> @n.Deadline.Value.ToString("yyyy-MM-dd")</p>
+                }
+
+                <small style="color: rgba(255,255,255,0.75);">
+                    Skapad: @n.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                </small>
+            </div>
+        }
+    }
+</div>

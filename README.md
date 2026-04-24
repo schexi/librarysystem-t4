@@ -16,3 +16,16 @@ För att möjliggöra en korrekt bedömning av min implementation har funktional
 Adishkas del av projektet, User-Api, finns implementerad i branchen inlamning. Detta är en påbyggnad av det stabila driftsätta systemet men med User-Api integration, dock med viss förlust av vissa funktioner från de redan integrerade APIerna. Då azure krachade och versionen inte hamnade på github hann vi ej bygga in detta i systemet, gruppen ville ej riskera att nya inkommande fel därav implementerades denna aldrig i main. Därav har vi lagt en separat branch för denna funktion där man både kan skapa konto och logga in som user och admin. 
 
 admin kod (HV-Admin-2026)
+
+
+UPPDATERAD README 24/4-2026
+
+Notifications API är nu integrerat i systemet.
+
+Notifikationer hämtas i NotificationsController och visas på /Notifications i webbappen.
+
+---
+
+Körs genom detta command i main branchen:
+dotnet run --project ./LibrarySystem-T4/LibrarySystem-T4.csproj
+

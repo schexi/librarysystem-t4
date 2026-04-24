@@ -1,8 +1,8 @@
-using LibrarySystemFrontend.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using LibrarySystem_T4.Models;
 
-namespace LibrarySystemFrontend.Controllers;
+namespace LibrarySystem_T4.Controllers;
 
 public class NotificationsController : Controller
 {
@@ -11,7 +11,7 @@ public class NotificationsController : Controller
     public NotificationsController()
     {
         _httpClient = new HttpClient();
-        _httpClient.BaseAddress = new Uri("http://localhost:5165/");
+        _httpClient.BaseAddress = new Uri("https://notifications-api-edin.azurewebsites.net/");
     }
 
     public async Task<IActionResult> Index()

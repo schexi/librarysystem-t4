@@ -19,5 +19,35 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.5" />
       <PackageReference Include="Scalar.AspNetCore" Version="2.13.10" />
     </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Items-API\**\*.cs" />
+        <Compile Remove="Kategori-Api\**\*.cs" />
+        <Compile Remove="LibrarySystem\**\*.cs" />
+        <Compile Remove="LibrarySystem-T4\**\*.cs" />
+        <Compile Remove="LibrarySystemFrontend\**\*.cs" />
+        <Compile Remove="NotificationsAPI\**\*.cs" />
+        <Compile Include="LibrarySystem-T4\Controllers\NotificationsController.cs" />
+        <Compile Include="LibrarySystem-T4\Models\Notifications.cs" />
+    </ItemGroup>
 
+    <ItemGroup>
+        <Content Remove="Items-API\**\*" />
+        <Content Remove="Kategori-Api\**\*" />
+        <Content Remove="LibrarySystem\**\*" />
+        <Content Remove="LibrarySystem-T4\**\*" />
+        <Content Remove="LibrarySystemFrontend\**\*" />
+        <Content Remove="NotificationsAPI\**\*" />
+        <Content Include="LibrarySystem-T4\Views\Notifications\Index.cshtml">
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="LibrarySystem-T4\Views\Shared\_Layout.cshtml">
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="LibrarySystem-T4\Views\Notifications\Index.cshtml" />
+    </ItemGroup>
 </Project>
