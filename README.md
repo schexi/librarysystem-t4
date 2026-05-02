@@ -13,7 +13,9 @@ Gruppen valde att inte integrera denna del i huvudbranchen (main) i ett sent ske
 
 För att möjliggöra en korrekt bedömning av min implementation har funktionaliteten därför lagts i en separat branch där den kan köras och testas självständigt.
 
-Adishkas del av projektet, User-Api, finns implementerad i branchen inlamning. Detta är en påbyggnad av det stabila driftsätta systemet men med User-Api integration, dock med viss förlust av vissa funktioner från de redan integrerade APIerna. Då azure krachade och versionen inte hamnade på github hann vi ej bygga in detta i systemet, gruppen ville ej riskera att nya inkommande fel därav implementerades denna aldrig i main. Därav har vi lagt en separat branch för denna funktion där man både kan skapa konto och logga in som user och admin. 
+Adishkas del av projektet, User-Api, finns implementerad i mappen User-API i main-branchen.
+API:et är driftsatt på Azure via: https://user-api-adde.azurewebsites.net
+User-API är nu integrerat i systemet via appsettings.json.
 
 admin kod (HV-Admin-2026)
 
