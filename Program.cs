@@ -54,7 +54,8 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = "swagger";
 });
 
-app.UseStaticFiles();
+if (Directory.Exists(Path.Combine(builder.Environment.ContentRootPath, "wwwroot")))
+    app.UseStaticFiles();
 
 app.UseRouting();
 
