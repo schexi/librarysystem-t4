@@ -14,7 +14,7 @@ Gruppen valde att inte integrera denna del i huvudbranchen (main) i ett sent ske
 För att möjliggöra en korrekt bedömning av min implementation har funktionaliteten därför lagts i en separat branch där den kan köras och testas självständigt.
 
 Adishkas del av projektet, User-Api, finns implementerad i mappen User-API i main-branchen.
-API:et är driftsatt på Azure via: https://user-api-adde.azurewebsites.net
+API:et är driftsatt på Azure via: https://user-api-library-adishka.azurewebsites.net
 User-API är nu integrerat i systemet via appsettings.json.
 
 admin kod (HV-Admin-2026)
